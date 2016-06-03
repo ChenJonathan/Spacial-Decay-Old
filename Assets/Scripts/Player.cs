@@ -46,12 +46,13 @@ public class Player : MonoBehaviour, IDanmakuCollider, IPausable
     {
         fireTarget = new Vector2(transform.position.x, transform.position.y + 10);
         moveTarget = new Vector2(transform.position.x, transform.position.y);
-        
+        transform.rotation = Quaternion.identity;
+
         fireData = new FireBuilder(prefab, Field);
         fireData.From(transform);
         fireData.Towards(fireTarget);
         fireData.WithSpeed(32, 48);
-        fireData.WithRotation(-180, 180);
+        fireData.WithRotation(-3, 3);
     }
 	
 	void Update ()
@@ -61,16 +62,13 @@ public class Player : MonoBehaviour, IDanmakuCollider, IPausable
             HandleInput();
 
             transform.position = Vector2.Lerp(transform.position, moveTarget, Time.deltaTime * moveSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, (Vector3)fireTarget - transform.position), Time.deltaTime * rotateSpeed);
 
-            if(Vector2.Distance((Vector2)transform.position, moveTarget) < 0.1)
-            {
+            if (Vector2.Distance((Vector2)transform.position, moveTarget) < 0.1)
+            {   
                 fireDelay -= Time.deltaTime;
-                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(transform.forward, fireTarget), Time.deltaTime * rotateSpeed);
             }
-            else
-            {
-                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(transform.forward, moveTarget), Time.deltaTime * rotateSpeed);
-            }
+
             if (fireDelay <= 0)
             {
                 fireDelay += 1 / fireRate;
