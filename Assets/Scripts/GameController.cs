@@ -17,6 +17,7 @@ public class GameController : DanmakuGameController
 
     [SerializeField]
     private Player playerPrefab;
+    
 
     [SerializeField]
     private Vector2 playerSpawnLocation;
@@ -31,10 +32,12 @@ public class GameController : DanmakuGameController
             player.transform.parent = Field.transform;
             player.Field = Field;
         }
+
+        
     }
 
 	public override void Update ()
     {
         base.Update();
-	}
+    }
 }
