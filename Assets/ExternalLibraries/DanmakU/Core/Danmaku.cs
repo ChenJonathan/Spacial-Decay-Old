@@ -494,7 +494,7 @@ namespace DanmakU {
 					}
 				}
 			}
-            
+
 			if (!is_active || (Field != null && !Field.bounds.Contains (position))) {
 				DeactivateImmediate();
 				return;
@@ -641,7 +641,7 @@ namespace DanmakU {
 		/// </summary>
 		public void Deactivate()  {
 			to_deactivate = true;
-		}
+        }
 
 		/// <summary>
 		/// Immediately deactivates this Danmaku and ceases all processing done on it.

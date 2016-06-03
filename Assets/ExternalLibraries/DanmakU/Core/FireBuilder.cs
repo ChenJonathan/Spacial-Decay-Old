@@ -26,11 +26,13 @@ namespace DanmakU {
 		public DynamicInt Damage = 0;
 		public DanmakuGroup Group;
 
+        private Danmaku prev;
 		public Danmaku Fire() {
 			Danmaku danmaku = Danmaku.GetInactive(this);
 			danmaku.Field = Field;
 			danmaku.Activate ();
-			return danmaku;
+            prev = danmaku;
+            return danmaku;
 		}
 
 		public void Copy(FireData other) {

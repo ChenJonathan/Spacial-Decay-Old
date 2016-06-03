@@ -3,7 +3,7 @@ using System.Collections;
 using DanmakU;
 using System;
 
-public class Player : MonoBehaviour, IDanmakuCollider, IPausable
+public class Player : DanmakuCollider, IPausable
 {
 
     [SerializeField]
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour, IDanmakuCollider, IPausable
         set;
     }
 
-    public void OnDanmakuCollision(Danmaku danmaku, RaycastHit2D info)
+    protected override void DanmakuCollision(Danmaku danmaku, RaycastHit2D info)
     {
         lives--;
         danmaku.Deactivate();
@@ -51,7 +51,7 @@ public class Player : MonoBehaviour, IDanmakuCollider, IPausable
         fireData.From(transform);
         fireData.Towards(fireTarget);
         fireData.WithSpeed(32, 48);
-        fireData.WithRotation(-180, 180);
+        fireData.WithRotation(-8, 8);
     }
 	
 	void Update ()
