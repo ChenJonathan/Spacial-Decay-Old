@@ -24,7 +24,7 @@ public class Player : DanmakuCollider, IPausable
     private Vector2 fireTarget;
     private Vector2 moveTarget;
 
-    public virtual DanmakuField Field
+    public DanmakuField Field
     {
         get;
         set;
@@ -46,7 +46,8 @@ public class Player : DanmakuCollider, IPausable
     {
         fireTarget = new Vector2(transform.position.x, transform.position.y + 10);
         moveTarget = new Vector2(transform.position.x, transform.position.y);
-        
+        transform.rotation = Quaternion.identity;
+
         fireData = new FireBuilder(prefab, Field);
         fireData.From(transform);
         fireData.Towards(fireTarget);
@@ -61,16 +62,13 @@ public class Player : DanmakuCollider, IPausable
             HandleInput();
 
             transform.position = Vector2.Lerp(transform.position, moveTarget, Time.deltaTime * moveSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, (Vector3)fireTarget - transform.position), Time.deltaTime * rotateSpeed);
 
-            if(Vector2.Distance((Vector2)transform.position, moveTarget) < 0.1)
-            {
+            if (Vector2.Distance((Vector2)transform.position, moveTarget) < 0.1)
+            {   
                 fireDelay -= Time.deltaTime;
-                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(transform.forward, fireTarget), Time.deltaTime * rotateSpeed);
             }
-            else
-            {
-                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(transform.forward, moveTarget), Time.deltaTime * rotateSpeed);
-            }
+
             if (fireDelay <= 0)
             {
                 fireDelay += 1 / fireRate;
