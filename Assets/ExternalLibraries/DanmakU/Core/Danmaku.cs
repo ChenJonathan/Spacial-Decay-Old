@@ -370,6 +370,7 @@ namespace DanmakU {
 		internal Danmaku() {
 			groups = new List<DanmakuGroup> ();
 			raycastHits = new RaycastHit2D[5];
+            CollisionCheck = true;
 		}
 
 		internal void Update() {
