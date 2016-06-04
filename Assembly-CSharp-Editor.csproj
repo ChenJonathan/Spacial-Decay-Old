@@ -186,7 +186,11 @@
  </Reference>
  <Reference Include="FastSerializer">
 <<<<<<< HEAD
+<<<<<<< HEAD
  <HintPath>F:/SpacialDecay/Assets/ExternalLibraries/DanmakU/Plugins/Vexe/Runtime/Serialization/Serializers/FastSerializer/FastSerializer.dll</HintPath>
+=======
+ <HintPath>C:/Users/Jonathan Chen/Documents/Workspace/Unity/SpacialDecay/Assets/ExternalLibraries/DanmakU/Plugins/Vexe/Runtime/Serialization/Serializers/FastSerializer/FastSerializer.dll</HintPath>
+>>>>>>> 031c760575cd5666d6ca6d9f57d57ef02eea0ecb
 =======
  <HintPath>C:/Users/Jonathan Chen/Documents/Workspace/Unity/SpacialDecay/Assets/ExternalLibraries/DanmakU/Plugins/Vexe/Runtime/Serialization/Serializers/FastSerializer/FastSerializer.dll</HintPath>
 >>>>>>> 031c760575cd5666d6ca6d9f57d57ef02eea0ecb
