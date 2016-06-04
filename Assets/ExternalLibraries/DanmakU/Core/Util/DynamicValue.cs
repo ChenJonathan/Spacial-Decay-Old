@@ -68,9 +68,16 @@ namespace DanmakU {
 		}
 		
 		public DynamicInt(int min, int max) : this() {
-			Min = min;
-			Max = max;
-			type = (min == max) ? ValueType.Constant : ValueType.Random;
+            if (min > max)
+            {
+                this.max = min;
+                this.min = max;
+            }
+            else {
+                this.max = max;
+                this.min = min;
+            }
+            type = (min == max) ? ValueType.Constant : ValueType.Random;
 		}
 		
 		public static implicit operator int(DynamicInt df) {
