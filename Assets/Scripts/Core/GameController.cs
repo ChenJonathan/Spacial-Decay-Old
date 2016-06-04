@@ -20,6 +20,15 @@ public class GameController : DanmakuGameController
     [SerializeField]
     private Vector2 playerSpawnLocation;
 
+    private Player player;
+    public Player Player
+    {
+        get
+        {
+            return player;
+        }
+    }
+
     [SerializeField]
     private int level = 1;
 
@@ -27,14 +36,12 @@ public class GameController : DanmakuGameController
     {
         base.Awake();
         Vector2 spawnPos = Field.WorldPoint((Vector2)playerSpawnLocation);
-        Player player = (Player)Instantiate(playerPrefab, spawnPos, Quaternion.identity);
+        player = (Player)Instantiate(playerPrefab, spawnPos, Quaternion.identity);
         if (player != null)
         {
             player.transform.parent = Field.transform;
             player.Field = Field;
         }
-
-        
     }
 
 	public override void Update ()

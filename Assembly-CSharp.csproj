@@ -240,7 +240,10 @@
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\SerializableType.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\Tuple.cs" />
      <Compile Include="Assets\Scripts\Core\GameController.cs" />
+     <Compile Include="Assets\Scripts\Core\MapController.cs" />
      <Compile Include="Assets\Scripts\Core\Player.cs" />
+     <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
+     <Compile Include="Assets\Scripts\Enemy\TestEnemy.cs" />
      <Compile Include="Assets\Scripts\Util\BoundsUtil.cs" />
      <None Include="Assets\ExternalLibraries\DanmakU\Core\Materials\OneColorBulletShader.shader" />
      <None Include="Assets\ExternalLibraries\DanmakU\Plugins\Editor\Vexe\LICENSE.txt" />

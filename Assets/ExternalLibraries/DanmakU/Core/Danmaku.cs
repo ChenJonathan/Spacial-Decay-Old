@@ -374,7 +374,7 @@ namespace DanmakU {
 
 		internal void Update() {
 
-			int i, j, count;
+            int i, j, count;
 			originalPosition.x = position.x;
 			originalPosition.y = position.y;
 			Vector2 movementVector;

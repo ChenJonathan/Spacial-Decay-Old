@@ -6,15 +6,17 @@ public class BoundsUtil
 {
 	public static Vector2 VerifyBounds(Vector2 objCenter, Bounds2D obj, Bounds2D field)
     {
-        Vector2 offset = new Vector2();
-        if (obj.Min.x < field.Min.x)
-            offset.x += field.Min.x - obj.Min.x;
-        else if (obj.Max.x > field.Max.x)
-            offset.x += field.Max.x - obj.Max.x;
-        if (obj.Min.y < field.Min.y)
-            offset.y += field.Min.y - obj.Min.y;
-        else if (obj.Max.y > field.Max.y)
-            offset.y += field.Max.y - obj.Max.y;
-        return objCenter + offset;
+        Vector2 maxOffset = field.Max - (objCenter + obj.Extents);
+        Vector2 minOffset = field.Min - (objCenter - obj.Extents);
+
+        if (minOffset.x > 0)
+            objCenter.x = field.XMin + obj.Extents.x;
+        else if (maxOffset.x < 0)
+            objCenter.x = field.XMax - obj.Extents.x;
+        if (minOffset.y > 0)
+            objCenter.y = field.YMin + obj.Extents.y;
+        else if (maxOffset.y < 0)
+            objCenter.y = field.YMax - obj.Extents.y;
+        return objCenter;
     }
 }

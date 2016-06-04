@@ -13,7 +13,7 @@ public class Player : DanmakuCollider, IPausable
     [SerializeField]
     private GameObject moveTargetPrefab;
 
-    private Bounds2D bounds;
+    private Collider2D collider;
     private FireBuilder fireData;
     private GameObject fireCrosshair;
     private GameObject moveCrosshair;
@@ -54,8 +54,8 @@ public class Player : DanmakuCollider, IPausable
 
     void Start()
     {
-        bounds = new Bounds2D(GetComponent<Collider2D>().bounds);
-        fireTarget = new Vector2(transform.position.x, transform.position.y + 10);
+        collider = GetComponent<Collider2D>();
+        fireTarget = new Vector2(transform.position.x, transform.position.y + 5);
         moveTarget = new Vector2(transform.position.x, transform.position.y);
 
         fireCrosshair = (GameObject)Instantiate(fireTargetPrefab, fireTarget, Quaternion.identity);
@@ -70,6 +70,7 @@ public class Player : DanmakuCollider, IPausable
         fireData.Towards(fireTarget);
         fireData.WithSpeed(32, 48);
         fireData.WithRotation(-8, 8);
+        fireData.WithDamage(4, 8);
     }
 	
 	void Update()
@@ -113,15 +114,15 @@ public class Player : DanmakuCollider, IPausable
 
     public void SetFireTarget(Vector2 target)
     {
-        fireTarget = BoundsUtil.VerifyBounds(target, bounds, Field.bounds);
-        fireData.Towards(fireTarget);
         fireCrosshair.transform.position = fireTarget;
+        fireTarget = target;
+        fireData.Towards(fireTarget);
     }
 
     public void SetMoveTarget(Vector2 target)
     {
-        moveTarget = BoundsUtil.VerifyBounds(target, bounds, Field.bounds);
-        moveCrosshair.transform.position = moveTarget;
+        moveCrosshair.transform.position = target;
+        moveTarget = BoundsUtil.VerifyBounds(target, new Bounds2D(collider.bounds), Field.MovementBounds);
     }
 
     public bool isMoving()
