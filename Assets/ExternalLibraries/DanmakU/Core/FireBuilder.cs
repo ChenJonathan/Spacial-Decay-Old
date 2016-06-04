@@ -25,12 +25,12 @@ namespace DanmakU {
 		public DanmakuController Controller;
 		public DynamicInt Damage = 0;
 		public DanmakuGroup Group;
-
+        
 		public Danmaku Fire() {
 			Danmaku danmaku = Danmaku.GetInactive(this);
 			danmaku.Field = Field;
 			danmaku.Activate ();
-			return danmaku;
+            return danmaku;
 		}
 
 		public void Copy(FireData other) {
@@ -300,7 +300,7 @@ namespace DanmakU {
 		}
 
 		public FireBuilder Towards (Transform transform) {
-			if (transform == null) {
+			if (transform != null) {
 				targeted = true;
 				targetPosition = null;
 				targetObject = transform;
@@ -309,7 +309,7 @@ namespace DanmakU {
 		}
 
 		public FireBuilder Towards (Component component) {
-			if (component == null) {
+			if (component != null) {
 				targeted = true;
 				targetPosition = null;
 				targetObject = component.transform;
@@ -318,7 +318,7 @@ namespace DanmakU {
 		}
 
 		public FireBuilder Towards (GameObject gameObject) {
-			if (gameObject == null) {
+			if (gameObject != null) {
 				targeted = true;
 				targetPosition = null;
 				targetObject = gameObject.transform;

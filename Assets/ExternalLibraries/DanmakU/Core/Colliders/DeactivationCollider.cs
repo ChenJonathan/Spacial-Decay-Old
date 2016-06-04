@@ -23,7 +23,7 @@ namespace DanmakU.Collider {
 		/// <param name="info">additional information about the collision</param>
 		protected override void DanmakuCollision (Danmaku danmaku, RaycastHit2D info) {
 			danmaku.Deactivate ();
-		}
+        }
 
 		#endregion
 		

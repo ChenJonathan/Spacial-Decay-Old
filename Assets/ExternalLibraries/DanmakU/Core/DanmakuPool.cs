@@ -160,7 +160,6 @@ namespace DanmakU {
 			}
 			for(int i = totalCount; i < endCount; i++, endIndex++) {
 				Danmaku danmaku = new Danmaku();
-				danmaku = new Danmaku();
 				danmaku.poolIndex = i;
 				all[i] = danmaku;
 				if(endIndex >= queue.Length)
@@ -202,7 +201,7 @@ namespace DanmakU {
 			inactiveCount--;
 			int index = queue [currentIndex];
 			currentIndex = (currentIndex + 1) % size;
-			return all [index];
+            return all [index];
 		}
 		
 		public void Return (Danmaku obj) {
