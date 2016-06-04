@@ -201,7 +201,6 @@ namespace DanmakU {
 			inactiveCount--;
 			int index = queue [currentIndex];
 			currentIndex = (currentIndex + 1) % size;
-            //Debug.Log("Got " + currentIndex + ": " + all[index].to_deactivate);
             return all [index];
 		}
 		
