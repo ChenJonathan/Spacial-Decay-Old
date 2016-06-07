@@ -11,6 +11,10 @@ public abstract class Enemy : DanmakuCollider, IPausable
     private int maxHealth;
     private int health;
 
+    [SerializeField]
+    protected GameObject DamageGUI;
+    private GUIController guiController;
+
     public DanmakuField Field
     {
         get;
@@ -27,8 +31,15 @@ public abstract class Enemy : DanmakuCollider, IPausable
     {
         health -= danmaku.Damage;
         danmaku.Deactivate();
-
-        if(health < 0)
+        
+        GameObject damageGUI = (GameObject) Instantiate(DamageGUI, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);
+        //damageGUI.transform.parent = Field.transform; // For making the GUI child of the field
+        damageGUI.GetComponent<TextMesh>().text = "" + danmaku.Damage;
+        
+        // May work on making GUIController in the future
+        //guiController.GenerateDamageIndicator(danmaku.Damage, new Vector2(transform.position.x, transform.position.y + 2));
+        
+        if(health <= 0)
         {
             // TODO Death animation
             Destroy(gameObject);
