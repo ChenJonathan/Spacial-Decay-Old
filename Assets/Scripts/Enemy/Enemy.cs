@@ -10,10 +10,13 @@ public abstract class Enemy : DanmakuCollider, IPausable
     [SerializeField]
     private int maxHealth;
     private int health;
+    
+    private GameObject healthBar;
 
     [SerializeField]
     protected GameObject DamageGUI;
-    private GUIController guiController;
+    [SerializeField]
+    protected GameObject HealthBar;
 
     public DanmakuField Field
     {
@@ -33,24 +36,27 @@ public abstract class Enemy : DanmakuCollider, IPausable
         danmaku.Deactivate();
         
         GameObject damageGUI = (GameObject) Instantiate(DamageGUI, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);
-        //damageGUI.transform.parent = Field.transform; // For making the GUI child of the field
+        damageGUI.transform.parent = Field.transform;
         damageGUI.GetComponent<TextMesh>().text = "" + danmaku.Damage;
+
+        float healthProportion = 1.0f * health / maxHealth;
+        healthBar.GetComponentInChildren<HealthIndicator>().Activate(healthProportion);
         
-        // May work on making GUIController in the future
-        //guiController.GenerateDamageIndicator(danmaku.Damage, new Vector2(transform.position.x, transform.position.y + 2));
-        
+
         if(health <= 0)
         {
             // TODO Death animation
             Destroy(gameObject);
         }
     }
-
+    
     public virtual void Start ()
     {
         bounds = new Bounds2D(GetComponent<Collider2D>().bounds);
         player = ((GameController)GameController.Instance).Player;
-
         health = maxHealth;
+
+        healthBar = (GameObject)Instantiate(HealthBar, transform.position, Quaternion.identity);
+        healthBar.transform.parent = transform;
     }
 }
