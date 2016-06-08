@@ -246,6 +246,7 @@
      <Compile Include="Assets\Scripts\Enemy\Enemy.cs" />
      <Compile Include="Assets\Scripts\Enemy\TestEnemy.cs" />
      <Compile Include="Assets\Scripts\GUI\DamageIndicator.cs" />
+     <Compile Include="Assets\Scripts\GUI\HealthIndicator.cs" />
      <Compile Include="Assets\Scripts\GUI\LivesCounter.cs" />
      <Compile Include="Assets\Scripts\Util\BoundsUtil.cs" />
      <None Include="Assets\ExternalLibraries\DanmakU\Core\Materials\OneColorBulletShader.shader" />
