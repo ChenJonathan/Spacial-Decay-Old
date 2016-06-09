@@ -250,7 +250,7 @@ namespace DanmakU {
 			if (TargetField == null)
 				TargetField = this;
 			Quaternion rotation = prefab.transform.rotation;
-			return Instantiate (gameObject, TargetField.WorldPoint (location, coordSys), rotation) as GameObject;
+			return Instantiate (prefab, TargetField.WorldPoint (location, coordSys), rotation) as GameObject;
 		}
 
 		public T SpawnObject<T>(T prefab, Vector2 location, CoordinateSystem coordSys = CoordinateSystem.View) where T : Component {

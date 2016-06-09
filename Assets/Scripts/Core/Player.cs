@@ -55,14 +55,14 @@ public class Player : DanmakuCollider, IPausable
     void Start()
     {
         collider = GetComponent<Collider2D>();
-        fireTarget = new Vector2(transform.position.x, transform.position.y + 5);
+        fireTarget = new Vector2(transform.position.x, transform.position.y + 0.001f);
         moveTarget = new Vector2(transform.position.x, transform.position.y);
 
         fireCrosshair = (GameObject)Instantiate(fireTargetPrefab, fireTarget, Quaternion.identity);
-        fireCrosshair.transform.parent = Field.transform;
+        fireCrosshair.transform.parent = GameController.Instance.transform;
         fireTargetRenderer = fireCrosshair.GetComponent<Renderer>();
         moveCrosshair = (GameObject)Instantiate(moveTargetPrefab, moveTarget, Quaternion.identity);
-        moveCrosshair.transform.parent = Field.transform;
+        moveCrosshair.transform.parent = GameController.Instance.transform;
         moveTargetRenderer = moveCrosshair.GetComponent<Renderer>();
 
         fireData = new FireBuilder(bulletPrefab, Field);
@@ -78,9 +78,6 @@ public class Player : DanmakuCollider, IPausable
 	    if(!Paused)
         {
             HandleInput();
-
-            transform.position = Vector2.Lerp(transform.position, moveTarget, Time.deltaTime * moveSpeed);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, (Vector3)fireTarget - transform.position), Time.deltaTime * rotateSpeed);
 
             if(isMoving())
             {
@@ -99,6 +96,12 @@ public class Player : DanmakuCollider, IPausable
             }
         }
 	}
+
+    void FixedUpdate()
+    {
+        transform.position = Vector2.Lerp(transform.position, moveTarget, Time.deltaTime * moveSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, (Vector3)fireTarget - transform.position), Time.deltaTime * rotateSpeed);
+    }
 
     private void HandleInput()
     {

@@ -29,7 +29,7 @@ namespace DanmakU {
 		private float angleResolution = 0.1f;
 
 		public virtual void Update() {
-			Danmaku.UpdateAll ();
+            Danmaku.UpdateAll ();
 		}
 
 		public override void Awake () {
