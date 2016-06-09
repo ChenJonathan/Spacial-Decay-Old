@@ -13,7 +13,7 @@ public class LivesCounter : MonoBehaviour {
 
     private RectTransform rect;
     
-	void Start ()
+	void Awake ()
     {
         unit = width / maxLives;
         rect = GetComponent<RectTransform>();
@@ -23,6 +23,7 @@ public class LivesCounter : MonoBehaviour {
 	
 	public void UpdateCounter (int lives)
     {
-        rect.localPosition = new Vector2(lives * unit - width, 0);
+        if (rect != null)
+            rect.localPosition = new Vector2(lives * unit - width, 0);
 	}
 }
