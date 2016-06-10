@@ -13,13 +13,25 @@ public class Player : DanmakuCollider, IPausable
     [SerializeField]
     private GameObject moveTargetPrefab;
 
+    private Canvas UICanvas;
+
     private Collider2D collider;
     private FireBuilder fireData;
+
     private GameObject fireCrosshair;
     private GameObject moveCrosshair;
+    private GameObject counter;
+    private LivesCounter livesCounter;
 
     [SerializeField]
     private int lives = 5;
+    public int Lives
+    {
+        get
+        {
+            return lives;
+        }
+    }
 
     [SerializeField]
     private float fireRate = 12;
@@ -50,6 +62,7 @@ public class Player : DanmakuCollider, IPausable
     {
         lives--;
         danmaku.Deactivate();
+        livesCounter.UpdateCounter(lives);
     }
 
     void Start()
@@ -71,6 +84,10 @@ public class Player : DanmakuCollider, IPausable
         fireData.WithSpeed(32, 48);
         fireData.WithRotation(-8, 8);
         fireData.WithDamage(4, 8);
+
+        counter = GameObject.FindGameObjectWithTag("Counter");
+        livesCounter = counter.GetComponent<LivesCounter>();
+        livesCounter.UpdateCounter(lives);
     }
 	
 	void Update()

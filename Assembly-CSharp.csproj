@@ -240,12 +240,16 @@
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\SerializableType.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\Tuple.cs" />
      <Compile Include="Assets\Scripts\Core\EnemyManager.cs" />
+     <Compile Include="Assets\Scripts\Core\GUIController.cs" />
      <Compile Include="Assets\Scripts\Core\GameController.cs" />
      <Compile Include="Assets\Scripts\Core\Generate.cs" />
      <Compile Include="Assets\Scripts\Core\Interface\Enemy.cs" />
      <Compile Include="Assets\Scripts\Core\Interface\Wave.cs" />
      <Compile Include="Assets\Scripts\Core\Player.cs" />
      <Compile Include="Assets\Scripts\Enemy\TestEnemy.cs" />
+     <Compile Include="Assets\Scripts\GUI\DamageIndicator.cs" />
+     <Compile Include="Assets\Scripts\GUI\HealthIndicator.cs" />
+     <Compile Include="Assets\Scripts\GUI\LivesCounter.cs" />
      <Compile Include="Assets\Scripts\Util\BoundsUtil.cs" />
      <Compile Include="Assets\Scripts\Util\Direction.cs" />
      <Compile Include="Assets\Scripts\Util\IntVector.cs" />

@@ -50,6 +50,7 @@ public class EnemyManager : Singleton<EnemyManager>
             if(clone != null)
             {
                 clone.transform.parent = field.transform;
+                clone.Field = field;
                 return clone;
             }
         }
