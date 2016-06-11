@@ -25,7 +25,7 @@ public static class Generate
         }
 
         map.start = new IntVector(0, 0);
-        map.end = new IntVector(0, 2); ;
+        map.end = new IntVector(0, 2);
 
         return map;
     }

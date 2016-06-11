@@ -13,8 +13,6 @@ public class Player : DanmakuCollider, IPausable
     [SerializeField]
     private GameObject moveTargetPrefab;
 
-    private Canvas UICanvas;
-
     private Collider2D collider;
     private FireBuilder fireData;
 
@@ -32,6 +30,10 @@ public class Player : DanmakuCollider, IPausable
             return lives;
         }
     }
+
+    private bool invincible = false;
+    private static readonly float INVINCIBILITY_ON_SPAWN = 5;
+    private static readonly float INVINCIBILITY_ON_HIT = 3;
 
     [SerializeField]
     private float fireRate = 12;
@@ -60,9 +62,13 @@ public class Player : DanmakuCollider, IPausable
 
     protected override void DanmakuCollision(Danmaku danmaku, RaycastHit2D info)
     {
-        lives--;
         danmaku.Deactivate();
-        livesCounter.UpdateCounter(lives);
+        if(!invincible)
+        {
+            lives--;
+            livesCounter.UpdateCounter(lives);
+            StartCoroutine(setInvincible(INVINCIBILITY_ON_HIT));
+        }
     }
 
     void Start()
@@ -88,6 +94,8 @@ public class Player : DanmakuCollider, IPausable
         counter = GameObject.FindGameObjectWithTag("Counter");
         livesCounter = counter.GetComponent<LivesCounter>();
         livesCounter.UpdateCounter(lives);
+
+        StartCoroutine(setInvincible(INVINCIBILITY_ON_SPAWN));
     }
 	
 	void Update()
@@ -96,6 +104,7 @@ public class Player : DanmakuCollider, IPausable
         {
             HandleInput();
 
+            // Movement
             if(isMoving())
             {
                 moveTargetRenderer.enabled = true;
@@ -106,6 +115,7 @@ public class Player : DanmakuCollider, IPausable
                 moveTargetRenderer.enabled = false;
             }
 
+            // Attack
             if(fireDelay <= 0)
             {
                 fireDelay += 1 / fireRate;
@@ -116,8 +126,11 @@ public class Player : DanmakuCollider, IPausable
 
     void FixedUpdate()
     {
-        transform.position = Vector2.Lerp(transform.position, moveTarget, Time.deltaTime * moveSpeed);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, (Vector3)fireTarget - transform.position), Time.deltaTime * rotateSpeed);
+        if(!Paused)
+        {
+            transform.position = Vector2.Lerp(transform.position, moveTarget, Time.deltaTime * moveSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, (Vector3)fireTarget - transform.position), Time.deltaTime * rotateSpeed);
+        }
     }
 
     private void HandleInput()
@@ -148,5 +161,22 @@ public class Player : DanmakuCollider, IPausable
     public bool isMoving()
     {
         return Vector2.Distance(transform.position, moveTarget) > 0.01;
+    }
+
+    public IEnumerator setInvincible(float time)
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        Color color = renderer.material.color;
+        invincible = true;
+        for (float i = 0; i < time; i += Time.deltaTime + 0.25f)
+        {
+            color.a = 1.25f - color.a;
+            renderer.material.color = color;
+            yield return new WaitForSeconds(0.25f);
+        }
+        color.a = 1;
+        renderer.material.color = color;
+        invincible = false;
+        yield break;
     }
 }

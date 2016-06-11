@@ -65,7 +65,6 @@ public abstract class Enemy : DanmakuCollider, IPausable
 
     public virtual void Die()
     {
-        // TODO Death animation
         enemies.Remove(this);
         Destroy(gameObject);
     }
