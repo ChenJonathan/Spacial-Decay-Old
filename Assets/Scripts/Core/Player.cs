@@ -171,7 +171,7 @@ public class Player : DanmakuCollider, IPausable
         {
             color.a = 1.25f - color.a;
             renderer.material.color = color;
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.04f);
         }
         color.a = 1;
         renderer.material.color = color;

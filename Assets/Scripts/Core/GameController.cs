@@ -236,20 +236,18 @@ public partial class GameController : DanmakuGameController
 
     IEnumerator EndWaveMessage()
     {
-        MeshRenderer messageRender = waveMessage.GetComponent<MeshRenderer>();
+        CanvasRenderer messageRender = waveMessage.GetComponent<CanvasRenderer>();
         waveMessage.SetActive(true);
 
         for (float a = 0f; a <= 1f; a += 0.01f)
         {
-            Color c = messageRender.material.color;
-            messageRender.material.color = new Color(c.r, c.g, c.b, a);
+            messageRender.SetAlpha(a);
             yield return null;
         }
-        // yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2);
         for (float a = 1f; a >= 0f; a -= 0.01f)
         {
-            Color c = messageRender.material.color;
-            messageRender.material.color = new Color(c.r, c.g, c.b, a);
+            messageRender.SetAlpha(a);
             yield return null;
         }
 
@@ -259,20 +257,18 @@ public partial class GameController : DanmakuGameController
 
     IEnumerator EndRoomMessage()
     {
-        MeshRenderer messageRender = roomMessage.GetComponent<MeshRenderer>();
+        CanvasRenderer messageRender = roomMessage.GetComponent<CanvasRenderer>();
         roomMessage.SetActive(true);
 
         for (float a = 0f; a <= 1f; a += 0.01f)
         {
-            Color c = messageRender.material.color;
-            messageRender.material.color = new Color(c.r, c.g, c.b, a);
+            messageRender.SetAlpha(a);
             yield return null;
         }
-        // yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2);
         for (float a = 1f; a >= 0f; a -= 0.01f)
         {
-            Color c = messageRender.material.color;
-            messageRender.material.color = new Color(c.r, c.g, c.b, a);
+            messageRender.SetAlpha(a);
             yield return null;
         }
 
