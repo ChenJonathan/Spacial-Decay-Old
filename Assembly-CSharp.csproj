@@ -247,7 +247,6 @@
      <Compile Include="Assets\Scripts\Core\Interface\Wave.cs" />
      <Compile Include="Assets\Scripts\Core\Player.cs" />
      <Compile Include="Assets\Scripts\Enemy\TestEnemy.cs" />
-     <Compile Include="Assets\Scripts\GUI\ChangeRoom.cs" />
      <Compile Include="Assets\Scripts\GUI\DamageIndicator.cs" />
      <Compile Include="Assets\Scripts\GUI\HealthIndicator.cs" />
      <Compile Include="Assets\Scripts\GUI\LivesCounter.cs" />

@@ -18,7 +18,7 @@ public class TestWave : Wave
         time += Time.deltaTime;
         if(time >= 4)
         {
-            if(spawned == 1)
+            if(spawned == 5)
             {
                 End();
             }

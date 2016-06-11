@@ -44,7 +44,7 @@ public partial class GameController : DanmakuGameController
 
     private int waveCount;
     private Wave currentWave;
-
+    
     [SerializeField]
     private GameObject waveMessage;
     [SerializeField]
@@ -154,8 +154,6 @@ public partial class GameController : DanmakuGameController
             {
                 upArrow.SetActive(true);
             }
-            // SetRoom(new IntVector(playerLocation.x, playerLocation.y + 1));
-            // StartRoom();
         }
     }
 
@@ -167,7 +165,7 @@ public partial class GameController : DanmakuGameController
             currentRoom = currentMap.rooms[playerLocation.x][playerLocation.y];
         }
     }
-
+    
     public void ChangeRoom(string direction)
     {
         int dx = 0, dy = 0;
@@ -212,7 +210,7 @@ public partial class GameController : DanmakuGameController
 
         StartRoom();
     }
-
+    
     public void StartWave()
     {
         currentWave = currentRoom.waves[waveCount];
