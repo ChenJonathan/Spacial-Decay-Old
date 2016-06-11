@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DanmakU;
+using System.Collections.Generic;
 
 public abstract class Enemy : DanmakuCollider, IPausable
 {
-    protected Bounds2D bounds;
     protected Player player;
+    protected List<Enemy> enemies;
+
+    private Bounds2D bounds;
 
     [SerializeField]
     private int maxHealth;
@@ -44,18 +47,26 @@ public abstract class Enemy : DanmakuCollider, IPausable
 
         if(health <= 0)
         {
-            // TODO Death animation
-            Destroy(gameObject);
+            Die();
         }
     }
-    
-    public virtual void Start ()
-    {
-        bounds = new Bounds2D(GetComponent<Collider2D>().bounds);
-        player = ((GameController)GameController.Instance).Player;
-        health = maxHealth;
 
+    public virtual void Start()
+    {
+        player = ((GameController)GameController.Instance).Player;
+        enemies = EnemyManager.Instance.Enemies;
+
+        bounds = new Bounds2D(GetComponent<Collider2D>().bounds);
         healthBar = (GameObject)Instantiate(HealthBar, transform.position, Quaternion.identity);
         healthBar.transform.parent = transform;
+
+        health = maxHealth;
+    }
+
+    public virtual void Die()
+    {
+        // TODO Death animation
+        enemies.Remove(this);
+        Destroy(gameObject);
     }
 }

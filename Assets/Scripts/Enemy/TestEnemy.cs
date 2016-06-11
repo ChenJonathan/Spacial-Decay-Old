@@ -4,7 +4,6 @@ using DanmakU;
 
 public class TestEnemy : Enemy
 {
-
     [SerializeField]
     private DanmakuPrefab bulletPrefab;
     private FireBuilder fireData;
@@ -16,6 +15,8 @@ public class TestEnemy : Enemy
     public override void Start ()
     {
         base.Start();
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position);
+
         fireData = new FireBuilder(bulletPrefab, Field);
         fireData.From(transform);
         fireData.Towards(player);
@@ -25,7 +26,7 @@ public class TestEnemy : Enemy
     void Update ()
     {
         if(Vector2.Distance(transform.position, player.transform.position) > 10)
-            transform.position = Vector2.Lerp(transform.position, player.transform.position, 0.01f);
+            transform.position = Vector2.Lerp(transform.position, player.transform.position, 0.001f);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position), Time.deltaTime * 4);
 
         fireDelay -= Time.deltaTime;

@@ -6,24 +6,41 @@ using System.Collections;
 public class LivesCounter : MonoBehaviour {
 
     [SerializeField]
+    private GameObject heartPrefab;
+
     private int maxLives;
-    [SerializeField]
-    private int width;
-    private int unit;
+    private float width;
+    private float unit;
 
-    private RectTransform rect;
+    private GameObject[] livesCounter;
     
-	void Awake ()
+	void Start()
     {
+        maxLives = GameObject.FindObjectOfType<Player>().Lives;
+        width = GetComponent<Renderer>().bounds.size.x / transform.localScale.x;
         unit = width / maxLives;
-        rect = GetComponent<RectTransform>();
 
-        UpdateCounter(maxLives);
+        livesCounter = new GameObject[maxLives];
+        for (int i = 0; i < maxLives; i++)
+        {
+            livesCounter[i] = (GameObject)Instantiate(heartPrefab);
+            livesCounter[i].transform.parent = this.transform;
+            livesCounter[i].transform.localPosition = new Vector2(i * unit - width / 2 + unit / 2, 0);
+        }
 	}
 	
 	public void UpdateCounter (int lives)
     {
-        if (rect != null)
-            rect.localPosition = new Vector2(lives * unit - width, 0);
+        if (lives >= 0)
+        {
+            for (int i = 0; i < lives; i++)
+            {
+                livesCounter[i].SetActive(true);
+            }
+            for (int i = lives; i < maxLives; i++)
+            {
+                livesCounter[i].SetActive(false);
+            }
+        }
 	}
 }
