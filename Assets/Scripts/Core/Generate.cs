@@ -196,6 +196,7 @@ public static class Generate
         // Debug.Log("Ends at " + map.end.ToString());
 
         // Debug.Log("Room count: " + roomCount);
+        /* map preview
         string mapgen = "";
         for (int j = 0; j < height; j++)
         {
@@ -214,6 +215,7 @@ public static class Generate
             mapgen = mapgen + "\n" + str1 + "\n" + str2;
         }
         Debug.Log(mapgen);
+        */
 
         return map;
     }
