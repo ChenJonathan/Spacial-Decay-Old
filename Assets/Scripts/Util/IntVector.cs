@@ -31,4 +31,9 @@ public class IntVector
     {
         return x * 7 + y * 9;
     }
+
+    public override string ToString()
+    {
+        return "(" + x + ", " + y + ")";
+    }
 }

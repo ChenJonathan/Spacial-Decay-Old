@@ -24,7 +24,7 @@ public class LivesCounter : MonoBehaviour {
         for (int i = 0; i < maxLives; i++)
         {
             livesCounter[i] = (GameObject)Instantiate(heartPrefab);
-            livesCounter[i].transform.SetParent(this.transform);
+            livesCounter[i].transform.SetParent(transform);
             livesCounter[i].transform.localScale = this.transform.localScale;
             livesCounter[i].transform.localPosition = new Vector2(i * unit - width/2 + unit/2, 0);
         }

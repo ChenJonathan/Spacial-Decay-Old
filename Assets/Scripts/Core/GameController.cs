@@ -94,7 +94,7 @@ public partial class GameController : DanmakuGameController
             player.Field = Field;
         }
 
-        currentMap = Generate.RandomMap(3, 3, 3);
+        currentMap = Generate.RandomMap(3, 3, 3, 0.6f);
         StartMap();
     }
 

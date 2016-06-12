@@ -4,10 +4,10 @@ using System.Collections;
 public class DamageIndicator : MonoBehaviour {
     
     [SerializeField]
-    private int scrollSpeed = 5;
+    private int scrollSpeed = 2;
     [SerializeField]
-    private int duration = 40;
-    private int remaining;
+    private float duration = 1;
+    private float remaining;
 
     [SerializeField]
     public static GameObject DamageGUI;
@@ -29,11 +29,11 @@ public class DamageIndicator : MonoBehaviour {
 
 	void Update()
     {
-        transform.position = Vector2.Lerp(transform.position, new Vector2(transform.position.x, transform.position.y + scrollSpeed), Time.deltaTime * remaining / duration);
+        transform.position += new Vector3(0, scrollSpeed * Mathf.Lerp(0, remaining / duration, Time.deltaTime), 0); 
         Color c = damageRenderer.material.color;
-        damageRenderer.material.color = new Color(c.r, c.g, c.b, Mathf.Lerp(c.a, 0, Time.deltaTime * scrollSpeed)); // Fade away effect
+        damageRenderer.material.color = new Color(c.r, c.g, c.b, Mathf.Lerp(0, 1, remaining)); // Fade away effect
         
-        if (remaining-- <= 0)
+        if ((remaining-=Time.deltaTime) <= 0)
         {
             Destroy(gameObject);
         }
