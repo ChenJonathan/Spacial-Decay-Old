@@ -93,7 +93,6 @@ public class Player : DanmakuCollider, IPausable
 
         counter = GameObject.FindGameObjectWithTag("Counter");
         livesCounter = counter.GetComponent<LivesCounter>();
-        livesCounter.UpdateCounter(lives);
 
         StartCoroutine(setInvincible(INVINCIBILITY_ON_SPAWN));
     }
