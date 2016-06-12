@@ -167,11 +167,11 @@ public class Player : DanmakuCollider, IPausable
         Renderer renderer = GetComponent<Renderer>();
         Color color = renderer.material.color;
         invincible = true;
-        for (float i = 0; i < time; i += Time.deltaTime + 0.25f)
+        for (float i = 0; i < time; i += Time.deltaTime + 0.06f)
         {
             color.a = 1.25f - color.a;
             renderer.material.color = color;
-            yield return new WaitForSeconds(0.04f);
+            yield return new WaitForSeconds(0.06f);
         }
         color.a = 1;
         renderer.material.color = color;

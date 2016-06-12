@@ -17,7 +17,7 @@ public class LivesCounter : MonoBehaviour {
 	void Start()
     {
         maxLives = GameObject.FindObjectOfType<Player>().Lives;
-        width = GetComponent<Renderer>().bounds.size.x / transform.localScale.x;
+        width = GetComponent<RectTransform>().rect.width;
         unit = width / maxLives;
 
         livesCounter = new GameObject[maxLives];
@@ -25,7 +25,8 @@ public class LivesCounter : MonoBehaviour {
         {
             livesCounter[i] = (GameObject)Instantiate(heartPrefab);
             livesCounter[i].transform.parent = this.transform;
-            livesCounter[i].transform.localPosition = new Vector2(i * unit - width / 2 + unit / 2, 0);
+            livesCounter[i].transform.localScale = this.transform.localScale;
+            livesCounter[i].transform.localPosition = new Vector2(i * unit - width/2 + unit/2, 0);
         }
 	}
 	

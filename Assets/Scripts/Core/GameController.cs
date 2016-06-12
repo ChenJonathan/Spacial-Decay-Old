@@ -138,19 +138,19 @@ public partial class GameController : DanmakuGameController
         }
         else
         {
-            if (playerLocation.x + 1 != currentMap.size.x && currentMap.rooms[playerLocation.x + 1][playerLocation.y].active)
+            if (currentRoom.right)
             {
                 rightArrow.SetActive(true);
             }
-            if (playerLocation.x != 0 && currentMap.rooms[playerLocation.x - 1][playerLocation.y].active)
+            if (currentRoom.left)
             {
                 leftArrow.SetActive(true);
             }
-            if (playerLocation.y + 1 != currentMap.size.y && currentMap.rooms[playerLocation.x][playerLocation.y + 1].active)
+            if (currentRoom.down)
             {
                 downArrow.SetActive(true);
             }
-            if (playerLocation.y != 0 && currentMap.rooms[playerLocation.x][playerLocation.y - 1].active)
+            if (currentRoom.up)
             {
                 upArrow.SetActive(true);
             }
