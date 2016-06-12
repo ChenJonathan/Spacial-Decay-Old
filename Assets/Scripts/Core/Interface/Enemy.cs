@@ -15,6 +15,8 @@ public abstract class Enemy : DanmakuCollider, IPausable
     private int health;
     
     private GameObject healthBar;
+    [SerializeField]
+    protected float healthBarSize = 1.0f;
 
     [SerializeField]
     protected GameObject DamageGUI;
@@ -59,6 +61,7 @@ public abstract class Enemy : DanmakuCollider, IPausable
         bounds = new Bounds2D(GetComponent<Collider2D>().bounds);
         healthBar = (GameObject)Instantiate(HealthBar, transform.position, Quaternion.identity);
         healthBar.transform.parent = transform;
+        healthBar.transform.localScale = new Vector3(healthBarSize, 1, 1);
 
         health = maxHealth;
     }

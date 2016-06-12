@@ -232,7 +232,7 @@ namespace DanmakU {
 					if(done) {
 						Danmaku danmaku = enumerator.Current;
 						particles[i].position = danmaku.position;
-						particles[i].size = danmaku.Scale;
+                        particles[i].size = danmaku.Scale;
 						//particles[i].axisOfRotation = forward;
 						particles[i].lifetime = 1000;
 						particles[i].color = danmaku.Color;
