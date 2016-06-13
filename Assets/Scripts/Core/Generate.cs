@@ -40,7 +40,7 @@ public static class Generate
             for (int i = 0; i < availableDirections; i++)
                 thresholds[i] = 1 - 0.25f * i;
 
-            // Randomize thresholds
+            // Randomly distribute thresholds among available directions
             for (int i = 0; i < availableDirections; i++)
             {
                 float temp = thresholds[i];
