@@ -7,13 +7,13 @@ public class TestWave : Wave
     private float time;
     private int spawned;
 
-    public override void Start()
+    void Start()
     {
         time = 0;
         spawned = 0;
     }
 
-    public override void Update()
+    void Update()
     {
         time += Time.deltaTime;
         if(time >= 4)
@@ -24,7 +24,7 @@ public class TestWave : Wave
             }
             else
             {
-                Spawn("TestEnemy", new Vector2(25, 15));
+                SpawnEnemy("TestEnemy", new Vector2(25, 15));
                 time = 0;
                 spawned++;
             }

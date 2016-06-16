@@ -15,9 +15,6 @@ public class EnemyManager : Singleton<EnemyManager>
         }
     }
 
-    // TODO Limit accessibility
-    public List<Enemy> Enemies;
-
     [SerializeField]
     private List<EnemyData> enemyList;
     private Dictionary<string, Enemy> enemyMap;
@@ -32,8 +29,6 @@ public class EnemyManager : Singleton<EnemyManager>
 	public override void Awake()
     {
         base.Awake();
-
-        Enemies = new List<Enemy>();
         
         enemyMap = new Dictionary<string, Enemy>();
         foreach(EnemyData enemy in enemyList)
@@ -55,14 +50,5 @@ public class EnemyManager : Singleton<EnemyManager>
             }
         }
         return null;
-    }
-
-    public void Clear()
-    {
-        foreach (Enemy enemy in Enemies)
-        {
-            enemy.Die();
-        }
-        Enemies.Clear();
     }
 }

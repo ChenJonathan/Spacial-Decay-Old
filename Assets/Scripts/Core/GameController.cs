@@ -38,12 +38,10 @@ public partial class GameController : DanmakuGameController
     }
 
     private Map currentMap;
-
     private IntVector playerLocation;
-    private Room currentRoom;
 
+    private Room currentRoom;
     private int waveCount;
-    private Wave currentWave;
     
     [SerializeField]
     private GameObject waveMessage;
@@ -73,7 +71,7 @@ public partial class GameController : DanmakuGameController
     {
         public bool active;
         public int cleared;
-        public List<Wave> waves;
+        public List<string> waves;
 
         // Doors
         public bool up;
@@ -96,16 +94,6 @@ public partial class GameController : DanmakuGameController
 
         currentMap = Generate.RandomMap(3, 3, 3, 0.6f);
         StartMap();
-    }
-
-	public override void Update ()
-    {
-        base.Update();
-
-        if(currentWave != null)
-        {
-            currentWave.Update();
-        }
     }
 
     public void StartMap()
@@ -213,18 +201,16 @@ public partial class GameController : DanmakuGameController
     
     public void StartWave()
     {
-        currentWave = currentRoom.waves[waveCount];
-        currentWave.Start();
+        gameObject.AddComponent(Type.GetType(currentRoom.waves[waveCount]));
     }
 
     public void EndWave()
     {
-        //TODO
         Debug.Log("Wave finished");
 
-        currentWave = null;
+        Destroy(GetComponent<Wave>());
         waveCount++;
-        if (waveCount == currentRoom.waves.Count)
+        if(waveCount == currentRoom.waves.Count)
         {
             StartCoroutine(EndRoomMessage());
         }

@@ -12,9 +12,8 @@ public class TestEnemy : Enemy
     private float fireRate = 1;
     private float fireDelay = 0;
 
-    public override void Start ()
+    void Start()
     {
-        base.Start();
         transform.rotation = Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position);
 
         fireData = new FireBuilder(bulletPrefab, Field);
@@ -23,7 +22,7 @@ public class TestEnemy : Enemy
         fireData.WithSpeed(10);
     }
     
-    void Update ()
+    void Update()
     {
         if(Vector2.Distance(transform.position, player.transform.position) > 10)
             transform.position = Vector2.Lerp(transform.position, player.transform.position, 0.001f);

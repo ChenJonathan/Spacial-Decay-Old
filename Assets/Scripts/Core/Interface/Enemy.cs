@@ -3,25 +3,40 @@ using System.Collections;
 using DanmakU;
 using System.Collections.Generic;
 
-public abstract class Enemy : DanmakuCollider, IPausable
+public abstract partial class Enemy : DanmakuCollider, IPausable
 {
+    private Wave wave;
+    public Wave Wave
+    {
+        get
+        {
+            return wave;
+        }
+        set
+        {
+            wave = value;
+            player = wave.Player;
+            enemies = wave.Enemies;
+        }
+    }
+
     protected Player player;
     protected List<Enemy> enemies;
-
-    private Bounds2D bounds;
 
     [SerializeField]
     private int maxHealth;
     private int health;
-    
+
+    private Bounds2D bounds;
+
     private GameObject healthBar;
     [SerializeField]
-    protected float healthBarSize = 1.0f;
+    private float healthBarSize = 1.0f;
 
     [SerializeField]
-    protected GameObject DamageGUI;
+    private GameObject DamageGUI;
     [SerializeField]
-    protected GameObject HealthBar;
+    private GameObject HealthBar;
 
     public DanmakuField Field
     {
@@ -53,12 +68,11 @@ public abstract class Enemy : DanmakuCollider, IPausable
         }
     }
 
-    public virtual void Start()
+    public override void Awake()
     {
-        player = ((GameController)GameController.Instance).Player;
-        enemies = EnemyManager.Instance.Enemies;
-
+        base.Awake();
         bounds = new Bounds2D(GetComponent<Collider2D>().bounds);
+
         healthBar = (GameObject)Instantiate(HealthBar, transform.position, Quaternion.identity);
         healthBar.transform.parent = transform;
         healthBar.transform.localScale = new Vector3(healthBarSize, 1, 1);
@@ -66,9 +80,16 @@ public abstract class Enemy : DanmakuCollider, IPausable
         health = maxHealth;
     }
 
+    public virtual void FixedUpdate()
+    {
+        if(attackBehavior != null)
+            attackBehavior.Update();
+        if(movementBehavior != null)
+            movementBehavior.Update();
+    }
+
     public virtual void Die()
     {
-        enemies.Remove(this);
-        Destroy(gameObject);
+        Wave.OnEnemyDeath(this);
     }
 }
