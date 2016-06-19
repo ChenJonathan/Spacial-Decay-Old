@@ -8,6 +8,8 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
     private AttackBehavior attackBehavior;
     private MovementBehavior movementBehavior;
 
+    protected bool loopBehaviors = false;
+
     protected void AddAttackBehavior(AttackBehavior behavior)
     {
         if (attackBehavior == null)
@@ -54,12 +56,13 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         movementBehavior = null;
     }
 
+    // Cannot be reused
     public abstract class Behavior
     {
         protected Player player;
         protected Enemy enemy;
         protected List<Enemy> enemies;
-        
+
         protected float time = 0;
 
         public virtual void Start(Enemy enemy)
@@ -67,6 +70,7 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
             player = enemy.player;
             this.enemy = enemy;
             enemies = enemy.enemies;
+            time = 0;
         }
 
         public virtual void Update()
@@ -81,19 +85,30 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
 
         public void Chain(AttackBehavior behavior)
         {
-            AttackBehavior temp = next;
-            while(temp.next != null)
+            if (behavior.next != null)
+                return;
+            AttackBehavior temp = this;
+            while (temp.next != null)
             {
                 temp = temp.next;
             }
-            temp.next = behavior;
+            if (temp != behavior)
+                temp.next = behavior;
         }
 
         public void End()
         {
-            enemy.attackBehavior = null;
-            if(next != null)
-                enemy.AddAttackBehavior(next);
+            enemy.attackBehavior = next;
+            next = null;
+            if (enemy.loopBehaviors)
+            {
+                enemy.AddAttackBehavior(this);
+                if (enemy.attackBehavior != this)
+                    enemy.attackBehavior.Start(enemy);
+
+            }
+            else if (enemy.movementBehavior != null)
+                enemy.movementBehavior.Start(enemy);
         }
     }
 
@@ -103,19 +118,30 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
 
         public void Chain(MovementBehavior behavior)
         {
-            MovementBehavior temp = next;
+            if (behavior.next != null)
+                return;
+            MovementBehavior temp = this;
             while (temp.next != null)
             {
                 temp = temp.next;
             }
-            temp.next = behavior;
+            if (temp != behavior)
+                temp.next = behavior;
         }
 
         public void End()
         {
-            enemy.movementBehavior = null;
-            if(next != null)
-                enemy.AddMovementBehavior(next);
+            enemy.movementBehavior = next;
+            next = null;
+            if (enemy.loopBehaviors)
+            {
+                enemy.AddMovementBehavior(this);
+                if (enemy.movementBehavior != this)
+                    enemy.movementBehavior.Start(enemy);
+
+            }
+            else if (enemy.movementBehavior != null)
+                enemy.movementBehavior.Start(enemy);
         }
     }
 }

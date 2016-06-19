@@ -2,7 +2,6 @@
 using System.Collections;
 using DanmakU;
 using System.Collections.Generic;
-using System;
 
 public partial class GameController : DanmakuGameController
 {
@@ -38,11 +37,15 @@ public partial class GameController : DanmakuGameController
     }
 
     private Map currentMap;
-    private IntVector playerLocation;
-
     private Room currentRoom;
+    private Wave currentWave;
+
+    private IntVector playerLocation;
     private int waveCount;
-    
+
+    private HashSet<IntVector> cleared = new HashSet<IntVector>();
+    private HashSet<IntVector> available = new HashSet<IntVector>();
+
     [SerializeField]
     private GameObject waveMessage;
     [SerializeField]
@@ -55,6 +58,12 @@ public partial class GameController : DanmakuGameController
     private GameObject leftArrow;
     [SerializeField]
     private GameObject rightArrow;
+
+    public bool Paused
+    {
+        get;
+        set;
+    }
 
     public struct Map
     {
@@ -70,7 +79,6 @@ public partial class GameController : DanmakuGameController
     public struct Room
     {
         public bool active;
-        public int cleared;
         public List<string> waves;
 
         // Doors
@@ -84,16 +92,28 @@ public partial class GameController : DanmakuGameController
     {
         base.Awake();
 
-        Vector2 spawnPos = Field.WorldPoint(new Vector2(0, 0));
+        Vector2 spawnPos = Field.WorldPoint(Vector2.zero);
         player = (Player)Instantiate(playerPrefab, spawnPos, Quaternion.identity);
         if (player != null)
         {
             player.transform.parent = Field.transform;
             player.Field = Field;
         }
+    }
 
+    public void Start()
+    {
         currentMap = Generate.RandomMap(3, 3, 3, 0.6f);
         StartMap();
+    }
+
+    public override void Update()
+    {
+        if (!Paused)
+            base.Update();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Pause(!Paused);
     }
 
     public void StartMap()
@@ -120,26 +140,33 @@ public partial class GameController : DanmakuGameController
     {
         // TODO
         Debug.Log("Room finished");
-        if(playerLocation.Equals(currentMap.end))
+
+        if (playerLocation.Equals(currentMap.end))
         {
             EndMap();
         }
         else
         {
+            cleared.Add(new IntVector(playerLocation.x, playerLocation.y));
+
             if (currentRoom.right)
             {
+                available.Add(new IntVector(playerLocation.x + 1, playerLocation.y));
                 rightArrow.SetActive(true);
             }
             if (currentRoom.left)
             {
+                available.Add(new IntVector(playerLocation.x - 1, playerLocation.y));
                 leftArrow.SetActive(true);
             }
             if (currentRoom.down)
             {
+                available.Add(new IntVector(playerLocation.x, playerLocation.y + 1));
                 downArrow.SetActive(true);
             }
             if (currentRoom.up)
             {
+                available.Add(new IntVector(playerLocation.x, playerLocation.y - 1));
                 upArrow.SetActive(true);
             }
         }
@@ -147,17 +174,17 @@ public partial class GameController : DanmakuGameController
 
     public void SetRoom(IntVector newLocation)
     {
-        if(currentMap.rooms[newLocation.x][newLocation.y].active)
+        if (currentMap.rooms[newLocation.x][newLocation.y].active)
         {
             playerLocation = newLocation;
             currentRoom = currentMap.rooms[playerLocation.x][playerLocation.y];
         }
     }
-    
+
     public void ChangeRoom(string direction)
     {
         int dx = 0, dy = 0;
-        Vector2 playerEndLoc = new Vector2(0, 0);
+        Vector2 playerEndLoc = Vector2.zero;
 
         switch (direction)
         {
@@ -198,19 +225,19 @@ public partial class GameController : DanmakuGameController
 
         StartRoom();
     }
-    
+
     public void StartWave()
     {
-        gameObject.AddComponent(Type.GetType(currentRoom.waves[waveCount]));
+        currentWave = (Wave)gameObject.AddComponent(WaveManager.Instance.Get(currentRoom.waves[waveCount]));
     }
 
     public void EndWave()
     {
         Debug.Log("Wave finished");
 
-        Destroy(GetComponent<Wave>());
+        Destroy(currentWave);
         waveCount++;
-        if(waveCount == currentRoom.waves.Count)
+        if (waveCount == currentRoom.waves.Count)
         {
             StartCoroutine(EndRoomMessage());
         }
@@ -260,5 +287,17 @@ public partial class GameController : DanmakuGameController
 
         roomMessage.SetActive(false);
         EndRoom();
+    }
+
+    public void Pause(bool value)
+    {
+        Paused = value;
+        Player.Paused = value;
+        if (currentWave != null)
+        {
+            currentWave.Paused = value;
+            foreach (Enemy enemy in currentWave.Enemies)
+                enemy.Paused = value;
+        }
     }
 }

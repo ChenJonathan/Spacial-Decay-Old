@@ -58,10 +58,12 @@ public class LivesCounter : MonoBehaviour {
                 {
                     livesCounter[i].SetActive(true);
                 }
-                for (int i = lives; i < Mathf.Min(maxLives, maxDisplayCount); i++)
+                for (int i = lives; i < maxDisplayCount; i++)
                 {
                     livesCounter[i].SetActive(false);
                 }
+                if (maxLives > maxDisplayCount)
+                    livesCounter[maxDisplayCount].SetActive(false);
             }
             else
             {

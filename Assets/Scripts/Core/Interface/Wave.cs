@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using DanmakU;
+using System;
 
-public abstract class Wave : Singleton<Wave>
+public abstract class Wave : MonoBehaviour, IPausable
 {
     protected Player player;
     public Player Player
@@ -23,13 +24,25 @@ public abstract class Wave : Singleton<Wave>
         }
     }
 
-    public override void Awake()
+    public bool Paused
     {
-        base.Awake();
+        get;
+        set;
+    }
 
+    public void Awake()
+    {
         player = ((GameController)GameController.Instance).Player;
         enemies = new List<Enemy>();
     }
+
+    public void Update()
+    {
+        if(!Paused)
+            NormalUpdate();
+    }
+
+    public virtual void NormalUpdate() { }
 	
 	public void End()
     {
@@ -45,13 +58,35 @@ public abstract class Wave : Singleton<Wave>
         return temp;
     }
 
-    public List<Enemy> SpawnEnemyChain(string enemy, Vector2 location, Vector2 locationOffset, float timeOffset)
+    public List<Enemy> SpawnEnemyChain(string enemy, float timeOffset, Vector2 location, Vector2 locationOffset, int count)
     {
-        // TODO
-        return new List<Enemy>();
+        List<Vector2> locations = new List<Vector2>();
+        for(int i = 0; i < count; i++)
+        {
+            locations.Add(location);
+            location += locationOffset;
+        }
+        return SpawnEnemyChain(enemy, timeOffset, locations);
     }
 
-    public void OnEnemyDeath(Enemy enemy)
+    public List<Enemy> SpawnEnemyChain(string enemy, float timeOffset, List<Vector2> locations)
+    {
+        List<Enemy> enemies = new List<Enemy>();
+        StartCoroutine(SpawnEnemyChain(enemies, enemy, timeOffset, locations));
+        return enemies;
+    }
+
+    private IEnumerator SpawnEnemyChain(List<Enemy> enemies, string enemy, float timeOffset, List<Vector2> locations)
+    {
+        foreach(Vector2 location in locations)
+        {
+            enemies.Add(SpawnEnemy(enemy, location));
+            yield return new WaitForSeconds(timeOffset);
+        }
+        yield break;
+    }
+
+    public virtual void OnEnemyDeath(Enemy enemy)
     {
         enemies.Remove(enemy);
         Destroy(enemy.gameObject);

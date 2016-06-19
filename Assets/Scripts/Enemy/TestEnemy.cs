@@ -22,7 +22,7 @@ public class TestEnemy : Enemy
         fireData.WithSpeed(10);
     }
     
-    void Update()
+    public override void NormalUpdate()
     {
         if(Vector2.Distance(transform.position, player.transform.position) > 10)
             transform.position = Vector2.Lerp(transform.position, player.transform.position, 0.001f);

@@ -224,7 +224,6 @@ public static class Generate
     {
         GameController.Room room = new GameController.Room();
         room.active = true;
-        room.cleared = 0;
         room.waves = new List<string>();
         for (int i = 0; i < numWaves; i++)
         {
@@ -235,8 +234,7 @@ public static class Generate
 
     public static string RandomWave()
     {
-        // TODO Make dict
-        return "TestWave";
+        return WaveManager.Instance.Strings[Random.Range(0, WaveManager.Instance.Strings.Count)];
     }
     
     private static bool OutOfBounds(IntVector roomIndex, GameController.Map map)

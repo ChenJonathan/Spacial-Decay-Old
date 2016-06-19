@@ -239,6 +239,9 @@
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\RuntimeMember.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\SerializableType.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\Tuple.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Attack\CircularAttackBehavior.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Attack\ConstantAttackBehavior.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Movement\MoveOverTimeBehavior.cs" />
      <Compile Include="Assets\Scripts\Core\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\Core\GUIController.cs" />
      <Compile Include="Assets\Scripts\Core\GameController.cs" />
@@ -247,6 +250,8 @@
      <Compile Include="Assets\Scripts\Core\Interface\Enemy.cs" />
      <Compile Include="Assets\Scripts\Core\Interface\Wave.cs" />
      <Compile Include="Assets\Scripts\Core\Player.cs" />
+     <Compile Include="Assets\Scripts\Core\WaveManager.cs" />
+     <Compile Include="Assets\Scripts\Enemy\TestBehaviorEnemy.cs" />
      <Compile Include="Assets\Scripts\Enemy\TestEnemy.cs" />
      <Compile Include="Assets\Scripts\GUI\DamageIndicator.cs" />
      <Compile Include="Assets\Scripts\GUI\HealthIndicator.cs" />

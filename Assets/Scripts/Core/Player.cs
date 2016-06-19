@@ -161,16 +161,22 @@ public class Player : DanmakuCollider, IPausable
         return Vector2.Distance(transform.position, moveTarget) > 0.01;
     }
 
+    private bool isPaused()
+    {
+        return Paused;
+    }
+
     public IEnumerator setInvincible(float time)
     {
         Renderer renderer = GetComponent<Renderer>();
         Color color = renderer.material.color;
         invincible = true;
-        for (float i = 0; i < time; i += Time.deltaTime + 0.06f)
+        for (float i = 0; i < time; i += Time.deltaTime + 0.05f)
         {
             color.a = 1.25f - color.a;
             renderer.material.color = color;
-            yield return new WaitForSeconds(0.06f);
+            yield return new WaitWhile(isPaused);
+            yield return new WaitForSeconds(0.05f);
         }
         color.a = 1;
         renderer.material.color = color;

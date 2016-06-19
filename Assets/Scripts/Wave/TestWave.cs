@@ -6,6 +6,7 @@ public class TestWave : Wave
 {
     private float time;
     private int spawned;
+    private int killed;
 
     void Start()
     {
@@ -13,21 +14,26 @@ public class TestWave : Wave
         spawned = 0;
     }
 
-    void Update()
+    public override void NormalUpdate()
     {
         time += Time.deltaTime;
         if(time >= 4)
         {
-            if(spawned == 5)
+            if(spawned < 5)
             {
-                End();
-            }
-            else
-            {
-                SpawnEnemy("TestEnemy", new Vector2(25, 15));
+                SpawnEnemy("TestBehaviorEnemy", new Vector2(25, 15));
                 time = 0;
                 spawned++;
             }
         }
+    }
+
+    public override void OnEnemyDeath(Enemy enemy)
+    {
+        base.OnEnemyDeath(enemy);
+
+        killed++;
+        if (killed == 5)
+            End();
     }
 }

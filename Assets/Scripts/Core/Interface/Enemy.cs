@@ -80,13 +80,28 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         health = maxHealth;
     }
 
-    public virtual void FixedUpdate()
+    public void Update()
     {
-        if(attackBehavior != null)
-            attackBehavior.Update();
-        if(movementBehavior != null)
-            movementBehavior.Update();
+        if(!Paused)
+            NormalUpdate();
     }
+
+    public virtual void NormalUpdate() { }
+
+    public void FixedUpdate()
+    {
+        if(!Paused)
+        {
+            if (attackBehavior != null)
+                attackBehavior.Update();
+            if (movementBehavior != null)
+                movementBehavior.Update();
+
+            NormalFixedUpdate();
+        }
+    }
+
+    public virtual void NormalFixedUpdate() { }
 
     public virtual void Die()
     {

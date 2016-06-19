@@ -39,16 +39,9 @@ public class EnemyManager : Singleton<EnemyManager>
 
     public Enemy Spawn(string enemy, Vector2 location)
     {
-        if(enemyMap[enemy] != null)
-        {
-            Enemy clone = (Enemy)Instantiate(enemyMap[enemy], location, Quaternion.identity);
-            if(clone != null)
-            {
-                clone.transform.parent = field.transform;
-                clone.Field = field;
-                return clone;
-            }
-        }
-        return null;
+        Enemy clone = (Enemy)Instantiate(enemyMap[enemy], location, Quaternion.identity);
+        clone.transform.parent = field.transform;
+        clone.Field = field;
+        return clone;
     }
 }
