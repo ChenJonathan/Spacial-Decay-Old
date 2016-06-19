@@ -21,3 +21,5 @@ C:\Users\RaphaelChunho\Documents\Unity Project\SpacialDecay\Temp\bin\Debug\Unity
 C:\Users\RaphaelChunho\Documents\Unity Project\SpacialDecay\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 C:\Users\RaphaelChunho\Documents\Unity Project\SpacialDecay\obj\Debug\Assembly-CSharp.dll
 C:\Users\RaphaelChunho\Documents\Unity Project\SpacialDecay\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Jonathan Chen\Documents\Workspace\Unity\SpacialDecay\obj\Debug\Assembly-CSharp.dll
+C:\Users\Jonathan Chen\Documents\Workspace\Unity\SpacialDecay\obj\Debug\Assembly-CSharp.pdb

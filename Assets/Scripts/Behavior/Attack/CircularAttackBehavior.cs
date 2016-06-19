@@ -6,14 +6,14 @@ public class CircularAttackBehavior : Enemy.AttackBehavior
 {
     private FireBuilder fireData;
 
-    float fireRate;
-    float fireDelay;
-    float angleOffset;
-    float duration;
+    private float fireRate;
+    private float fireDelay;
+    private float angleOffset;
+    private float duration;
 
     public CircularAttackBehavior(FireBuilder fireData, float fireRate, int perWave, float duration)
     {
-        this.fireData = fireData;
+        this.fireData = fireData.Clone();
         this.fireRate = fireRate;
         angleOffset = 360f / perWave;
         this.duration = duration;

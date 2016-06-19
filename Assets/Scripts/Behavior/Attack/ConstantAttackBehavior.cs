@@ -6,13 +6,13 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
 {
     private FireBuilder fireData;
 
-    float fireRate;
-    float fireDelay;
-    float duration;
+    private float fireRate;
+    private float fireDelay;
+    private float duration;
 
     public ConstantAttackBehavior(FireBuilder fireData, float fireRate, float duration)
     {
-        this.fireData = fireData;
+        this.fireData = fireData.Clone();
         this.fireRate = fireRate;
         this.duration = duration;
     }

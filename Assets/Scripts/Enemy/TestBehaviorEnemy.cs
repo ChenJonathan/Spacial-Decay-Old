@@ -21,9 +21,10 @@ public class TestBehaviorEnemy : Enemy
         fireData.Towards(player);
         fireData.WithSpeed(10);
 
-        AddMovementBehavior(new MoveOverTimeBehavior(player.transform.position - new Vector3(5, 5), 3));
-        AddMovementBehavior(new MoveOverTimeBehavior(Vector2.zero, 3));
-        AddAttackBehavior(new CircularAttackBehavior(fireData, 1, 8, float.MaxValue));
+        AddMovementBehavior(new FollowPlayerConstantSpeedBehavior(5, 5, 3));
+        AddMovementBehavior(new IdleMovementBehavior(3));
+        AddAttackBehavior(new CircularAttackBehavior(fireData, 1, 16, 3));
+        AddAttackBehavior(new ConstantAttackBehavior(fireData, 16, 3));
         loopBehaviors = true;
     }
     
