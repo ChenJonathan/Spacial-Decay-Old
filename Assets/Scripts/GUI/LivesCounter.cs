@@ -6,9 +6,9 @@ using System.Collections;
 public class LivesCounter : MonoBehaviour {
 
     [SerializeField]
-    private GameObject HeartPrefab;
+    private GameObject heartPrefab;
     [SerializeField]
-    private GameObject OverFlow;
+    private GameObject overFlow;
 
     private int maxLives;
     private float width;
@@ -23,23 +23,23 @@ public class LivesCounter : MonoBehaviour {
 	void Start()
     {
         maxLives = ((GameController)GameController.Instance).Player.Lives;
-        heartSize = HeartPrefab.GetComponent<RectTransform>().sizeDelta.x;
+        heartSize = heartPrefab.GetComponent<RectTransform>().sizeDelta.x;
         RectTransform rt = GetComponent<RectTransform>();
-        rt.anchoredPosition = new Vector2(-390 + heartSize / 2 * transform.localScale.x, 215 - heartSize * transform.localScale.y / 2);
+        rt.anchoredPosition = new Vector2(2 * gap + heartSize * transform.localScale.x / 2, -2 * gap - heartSize * transform.localScale.y / 2);
         rt.sizeDelta = new Vector2((heartSize + gap) * maxDisplayCount, 30);
         rt.pivot = new Vector2(0.5f / maxDisplayCount, 0.5f);
 
         livesCounter = new GameObject[maxLives];
         for (int i = 0; i < Mathf.Min(maxLives, maxDisplayCount); i++)
         {
-            livesCounter[i] = (GameObject)Instantiate(HeartPrefab);
+            livesCounter[i] = (GameObject)Instantiate(heartPrefab);
             livesCounter[i].transform.SetParent(transform);
             livesCounter[i].transform.localScale = new Vector3(1, 1, 1);
             livesCounter[i].transform.localPosition = new Vector2(i * (heartSize + gap), 0);
         }
         if (maxLives > maxDisplayCount)
         {
-            livesCounter[maxDisplayCount] = (GameObject)Instantiate(OverFlow);
+            livesCounter[maxDisplayCount] = (GameObject)Instantiate(overFlow);
             livesCounter[maxDisplayCount].transform.SetParent(transform);
             livesCounter[maxDisplayCount].transform.localScale = this.transform.localScale;
             livesCounter[maxDisplayCount].transform.localPosition = new Vector2((heartSize + gap) / 2, 0);
