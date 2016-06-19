@@ -13,6 +13,7 @@ public class LivesCounter : MonoBehaviour {
     private int maxLives;
     private float width;
     private float heartSize;
+
     [SerializeField]
     private float gap = 6;
     [SerializeField]

@@ -3,9 +3,9 @@ using System.Collections;
 
 public class MoveOverTimeBehavior : Enemy.MovementBehavior
 {
-    Vector2 start;
-    Vector2 target;
-    float totalTime;
+    private Vector2 start;
+    private Vector2 target;
+    private float totalTime;
 
     public MoveOverTimeBehavior(Vector2 dest, float interval)
     {
@@ -22,7 +22,8 @@ public class MoveOverTimeBehavior : Enemy.MovementBehavior
     public override void Update ()
     {
         base.Update();
-        enemy.transform.position = Vector2.Lerp(start, target, time / totalTime);
+
+        enemy.transform.position = Vector2.Lerp(start, target, time / totalTime * Time.deltaTime);
         if (time >= totalTime)
             End();
 	}
