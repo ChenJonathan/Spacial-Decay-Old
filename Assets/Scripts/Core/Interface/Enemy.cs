@@ -34,9 +34,9 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
     private float healthBarSize = 1.0f;
 
     [SerializeField]
-    private GameObject DamageGUI;
+    private GameObject damageGUIPrefab;
     [SerializeField]
-    private GameObject HealthBar;
+    private GameObject healthBarPrefab;
 
     public DanmakuField Field
     {
@@ -55,7 +55,7 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         health -= danmaku.Damage;
         danmaku.Deactivate();
         
-        GameObject damageGUI = (GameObject) Instantiate(DamageGUI, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);
+        GameObject damageGUI = (GameObject) Instantiate(damageGUIPrefab, new Vector2(transform.position.x, transform.position.y + 2), Quaternion.identity);
         damageGUI.transform.parent = Field.transform;
         damageGUI.GetComponent<TextMesh>().text = "" + danmaku.Damage;
 
@@ -73,7 +73,7 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         base.Awake();
         bounds = new Bounds2D(GetComponent<Collider2D>().bounds);
 
-        healthBar = (GameObject)Instantiate(HealthBar, transform.position, Quaternion.identity);
+        healthBar = (GameObject)Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
         healthBar.transform.parent = transform;
         healthBar.transform.localScale = new Vector3(healthBarSize, 1, 1);
 

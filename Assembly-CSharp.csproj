@@ -245,7 +245,6 @@
      <Compile Include="Assets\Scripts\Behavior\Movement\IdleMovementBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\MoveOverTimeBehavior.cs" />
      <Compile Include="Assets\Scripts\Core\EnemyManager.cs" />
-     <Compile Include="Assets\Scripts\Core\GUIController.cs" />
      <Compile Include="Assets\Scripts\Core\GameController.cs" />
      <Compile Include="Assets\Scripts\Core\Generate.cs" />
      <Compile Include="Assets\Scripts\Core\Interface\Behavior.cs" />
@@ -275,7 +274,11 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="FastSerializer">
+<<<<<<< HEAD
  <HintPath>F:/Spacial-Decay/Assets/ExternalLibraries/DanmakU/Plugins/Vexe/Runtime/Serialization/Serializers/FastSerializer/FastSerializer.dll</HintPath>
+=======
+ <HintPath>C:/Users/RaphaelChunho/Documents/Unity Project/Spacial-Decay/Assets/ExternalLibraries/DanmakU/Plugins/Vexe/Runtime/Serialization/Serializers/FastSerializer/FastSerializer.dll</HintPath>
+>>>>>>> 7b7ae8fb4ad70e9472f04ea2f28625a595598950
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
