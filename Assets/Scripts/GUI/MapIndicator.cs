@@ -119,15 +119,7 @@ public class MapIndicator : MonoBehaviour
                         ((GameController)GameController.Instance).SetRoom(index);
                     }
                     );
-                    if (map.start.Equals(new IntVector(i, j)))
-                    {
-                        playerMarker = (GameObject)Instantiate(playerLocPrefab);
-                        playerMarker.transform.SetParent(transform);
-                        playerMarker.transform.localPosition = rooms[i][j].transform.localPosition;
-                        playerMarker.transform.localScale = new Vector3(1, 1, 1);
-                    }
-                    else
-                        rooms[i][j].SetActive(false);
+                    rooms[i][j].SetActive(map.start.Equals(new IntVector(i, j)));
                 }
                 if (map.end.Equals(new IntVector(i, j)))
                 {
@@ -139,6 +131,10 @@ public class MapIndicator : MonoBehaviour
 
             }
         }
+        playerMarker = (GameObject)Instantiate(playerLocPrefab);
+        playerMarker.transform.SetParent(transform);
+        playerMarker.transform.localPosition = rooms[map.start.x][map.start.y].transform.localPosition;
+        playerMarker.transform.localScale = new Vector3(1, 1, 1);
     }
 
     /*

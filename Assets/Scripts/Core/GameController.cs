@@ -109,7 +109,7 @@ public partial class GameController : DanmakuGameController
     {
         mapIndicator = GameObject.FindGameObjectWithTag("Map");
 
-        currentMap = Generate.RandomMap(4, 4, 1, 0.6f);
+        currentMap = Generate.RandomMap(3, 3, 1, 0.6f);
         StartMap();
     }
 
