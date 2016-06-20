@@ -88,7 +88,7 @@ public class Player : DanmakuCollider, IPausable
         fireData.From(transform);
         fireData.Towards(fireTarget);
         fireData.WithSpeed(32, 48);
-        fireData.WithRotation(-8, 8);
+        fireData.WithRotation(-4, 4);
         fireData.WithDamage(4, 8);
 
         counter = GameObject.FindGameObjectWithTag("Counter");
