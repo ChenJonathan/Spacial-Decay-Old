@@ -55,6 +55,8 @@ public class MapIndicator : MonoBehaviour
                     
                     if (cleared.Contains(new IntVector(i, j)))
                     {
+                        for (int k = rooms[i][j].transform.childCount - 1; k >= 0; k--)
+                            rooms[i][j].transform.GetChild(k).gameObject.SetActive(true);
                         rooms[i][j].GetComponent<Button>().enabled = false;
                         rooms[i][j].SetActive(true);
                         im.color = Color.green;
@@ -105,13 +107,14 @@ public class MapIndicator : MonoBehaviour
                     rooms[i][j].transform.localScale = new Vector2(1, 1);
 
                     if (!map.rooms[i][j].up)
-                        rooms[i][j].transform.Find("Up Door").gameObject.SetActive(false);
+                        Destroy(rooms[i][j].transform.Find("Up Door").gameObject);
                     if (!map.rooms[i][j].down)
-                        rooms[i][j].transform.Find("Down Door").gameObject.SetActive(false);
+                        Destroy(rooms[i][j].transform.Find("Down Door").gameObject);
                     if (!map.rooms[i][j].left)
-                        rooms[i][j].transform.Find("Left Door").gameObject.SetActive(false);
+                        Destroy(rooms[i][j].transform.Find("Left Door").gameObject);
                     if (!map.rooms[i][j].right)
-                        rooms[i][j].transform.Find("Right Door").gameObject.SetActive(false);
+                        Destroy(rooms[i][j].transform.Find("Right Door").gameObject);
+
                     int index = j + map.size.y * i;
                     Button b = rooms[i][j].GetComponent<Button>();
                     b.onClick.AddListener(() =>
