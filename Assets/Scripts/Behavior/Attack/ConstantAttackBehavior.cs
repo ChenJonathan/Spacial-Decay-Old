@@ -17,6 +17,13 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
         this.duration = duration;
     }
 
+    public override void Start(Enemy enemy)
+    {
+        base.Start(enemy);
+
+        fireDelay = 0;
+    }
+
     public override void Update()
     {
         base.Update();

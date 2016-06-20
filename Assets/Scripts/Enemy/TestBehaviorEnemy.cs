@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DanmakU;
+using System.Collections.Generic;
 
 public class TestBehaviorEnemy : Enemy
 {
@@ -21,10 +22,12 @@ public class TestBehaviorEnemy : Enemy
         fireData.Towards(player);
         fireData.WithSpeed(10);
 
+        List<AttackBehavior> attacks = new List<AttackBehavior>();
         AddMovementBehavior(new FollowPlayerConstantSpeedBehavior(5, 5, 3));
         AddMovementBehavior(new IdleMovementBehavior(3));
-        AddAttackBehavior(new CircularAttackBehavior(fireData, 1, 16, 3));
-        AddAttackBehavior(new ConstantAttackBehavior(fireData, 16, 3));
+        attacks.Add(new CircularAttackBehavior(fireData, 1, 16, 6));
+        attacks.Add(new ConstantAttackBehavior(fireData, 8, 6));
+        AddAttackBehavior(new CombinedAttackBehavior(attacks));
         loopBehaviors = true;
     }
     

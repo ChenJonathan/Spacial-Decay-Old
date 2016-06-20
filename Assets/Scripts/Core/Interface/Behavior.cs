@@ -50,7 +50,7 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
     {
         attackBehavior = null;
     }
-
+    
     protected void ClearMovementBehavior()
     {
         movementBehavior = null;
@@ -77,11 +77,26 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         {
             time += Time.deltaTime;
         }
+
+        public void End()
+        {
+            if (OnBehaviorEnd != null)
+                OnBehaviorEnd(this);
+        }
+
+        public delegate void BehaviorEvent(Behavior behavior);
+        public BehaviorEvent OnBehaviorEnd;
     }
 
     public abstract class AttackBehavior : Behavior
     {
         private AttackBehavior next;
+
+        public override void Start(Enemy enemy)
+        {
+            base.Start(enemy);
+            OnBehaviorEnd += IncrementBehavior;
+        }
 
         public void Chain(AttackBehavior behavior)
         {
@@ -96,25 +111,37 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
                 temp.next = behavior;
         }
 
-        public void End()
+        protected static void IncrementBehavior(Behavior behavior)
         {
-            enemy.attackBehavior = next;
-            next = null;
+            AttackBehavior attackBehavior = (AttackBehavior)behavior;
+            Enemy enemy = attackBehavior.enemy;
+            // Only increment behavior if the finished behavior is the current one
+            if (attackBehavior != enemy.attackBehavior)
+                return;
+
+            enemy.attackBehavior = attackBehavior.next;
+            attackBehavior.next = null;
             if (enemy.loopBehaviors)
             {
-                enemy.AddAttackBehavior(this);
-                if (enemy.attackBehavior != this)
+                enemy.AddAttackBehavior(attackBehavior);
+                if (enemy.attackBehavior != attackBehavior)
                     enemy.attackBehavior.Start(enemy);
 
             }
-            else if (enemy.movementBehavior != null)
-                enemy.movementBehavior.Start(enemy);
+            else if (enemy.attackBehavior != null)
+                enemy.attackBehavior.Start(enemy);
         }
     }
 
     public abstract class MovementBehavior : Behavior
     {
         private MovementBehavior next;
+
+        public override void Start(Enemy enemy)
+        {
+            base.Start(enemy);
+            OnBehaviorEnd += IncrementBehavior;
+        }
 
         public void Chain(MovementBehavior behavior)
         {
@@ -129,14 +156,20 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
                 temp.next = behavior;
         }
 
-        public void End()
+        protected static void IncrementBehavior(Behavior behavior)
         {
-            enemy.movementBehavior = next;
-            next = null;
+            MovementBehavior movementBehavior = (MovementBehavior)behavior;
+            Enemy enemy = movementBehavior.enemy;
+            // Only increment behavior if the finished behavior is the current one
+            if (movementBehavior != enemy.movementBehavior)
+                return;
+
+            enemy.movementBehavior = movementBehavior.next;
+            movementBehavior.next = null;
             if (enemy.loopBehaviors)
             {
-                enemy.AddMovementBehavior(this);
-                if (enemy.movementBehavior != this)
+                enemy.AddMovementBehavior(movementBehavior);
+                if (enemy.movementBehavior != movementBehavior)
                     enemy.movementBehavior.Start(enemy);
 
             }

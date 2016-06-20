@@ -240,6 +240,7 @@
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\SerializableType.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\Tuple.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\CircularAttackBehavior.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Attack\CombinedAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\ConstantAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\FollowPlayerConstantSpeedBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\IdleMovementBehavior.cs" />
