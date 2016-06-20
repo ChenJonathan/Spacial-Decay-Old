@@ -71,8 +71,10 @@ public class Player : DanmakuCollider, IPausable
         }
     }
 
-    void Start()
+    public override void Awake()
     {
+        base.Awake();
+
         collider = GetComponent<Collider2D>();
         fireTarget = new Vector2(transform.position.x, transform.position.y + 0.001f);
         moveTarget = new Vector2(transform.position.x, transform.position.y);
@@ -84,15 +86,18 @@ public class Player : DanmakuCollider, IPausable
         moveCrosshair.transform.parent = GameController.Instance.transform;
         moveTargetRenderer = moveCrosshair.GetComponent<Renderer>();
 
+        counter = GameObject.FindGameObjectWithTag("Counter");
+        livesCounter = counter.GetComponent<LivesCounter>();
+    }
+
+    public void Start()
+    {
         fireData = new FireBuilder(bulletPrefab, Field);
         fireData.From(transform);
         fireData.Towards(fireTarget);
         fireData.WithSpeed(32, 48);
-        fireData.WithRotation(-8, 8);
+        fireData.WithRotation(-4, 4);
         fireData.WithDamage(4, 8);
-
-        counter = GameObject.FindGameObjectWithTag("Counter");
-        livesCounter = counter.GetComponent<LivesCounter>();
 
         StartCoroutine(setInvincible(INVINCIBILITY_ON_SPAWN));
     }

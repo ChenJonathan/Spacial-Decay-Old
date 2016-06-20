@@ -44,7 +44,11 @@ public partial class GameController : DanmakuGameController
     private int waveCount;
 
     private HashSet<IntVector> cleared = new HashSet<IntVector>();
-    private HashSet<IntVector> available = new HashSet<IntVector>();
+    private HashSet<IntVector> opened = new HashSet<IntVector>();
+
+    private GameObject mapIndicator;
+
+    private bool roomSelecting;
 
     [SerializeField]
     private GameObject waveMessage;
@@ -103,7 +107,9 @@ public partial class GameController : DanmakuGameController
 
     public void Start()
     {
-        currentMap = Generate.RandomMap(3, 3, 3, 0.6f);
+        mapIndicator = GameObject.FindGameObjectWithTag("Map");
+
+        currentMap = Generate.RandomMap(4, 4, 1, 0.6f);
         StartMap();
     }
 
@@ -112,14 +118,16 @@ public partial class GameController : DanmakuGameController
         if (!Paused)
             base.Update();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !roomSelecting)
             Pause(!Paused);
     }
 
     public void StartMap()
     {
+        mapIndicator.GetComponent<MapIndicator>().Generate(currentMap);
+
+        opened.Add(currentMap.start);
         SetRoom(currentMap.start);
-        StartRoom();
     }
 
     public void EndMap()
@@ -130,8 +138,6 @@ public partial class GameController : DanmakuGameController
 
     public void StartRoom()
     {
-        // player.transform.position = new Vector2(0, 0);
-
         waveCount = 0;
         StartWave();
     }
@@ -140,7 +146,7 @@ public partial class GameController : DanmakuGameController
     {
         // TODO
         Debug.Log("Room finished");
-
+        
         if (playerLocation.Equals(currentMap.end))
         {
             EndMap();
@@ -151,25 +157,30 @@ public partial class GameController : DanmakuGameController
 
             if (currentRoom.right)
             {
-                available.Add(new IntVector(playerLocation.x + 1, playerLocation.y));
-                rightArrow.SetActive(true);
+                opened.Add(new IntVector(playerLocation.x + 1, playerLocation.y));
             }
             if (currentRoom.left)
             {
-                available.Add(new IntVector(playerLocation.x - 1, playerLocation.y));
-                leftArrow.SetActive(true);
+                opened.Add(new IntVector(playerLocation.x - 1, playerLocation.y));
             }
             if (currentRoom.down)
             {
-                available.Add(new IntVector(playerLocation.x, playerLocation.y + 1));
-                downArrow.SetActive(true);
+                opened.Add(new IntVector(playerLocation.x, playerLocation.y + 1));
             }
             if (currentRoom.up)
             {
-                available.Add(new IntVector(playerLocation.x, playerLocation.y - 1));
-                upArrow.SetActive(true);
+                opened.Add(new IntVector(playerLocation.x, playerLocation.y - 1));
             }
+            roomSelecting = true;
+            Pause(true);
         }
+    }
+
+    public void SetRoom(int index)
+    {
+        int x = index / currentMap.size.y;
+        int y = index - x * currentMap.size.y;
+        SetRoom(new IntVector(x, y));
     }
 
     public void SetRoom(IntVector newLocation)
@@ -179,50 +190,10 @@ public partial class GameController : DanmakuGameController
             playerLocation = newLocation;
             currentRoom = currentMap.rooms[playerLocation.x][playerLocation.y];
         }
-    }
+        player.SetMoveTarget(Vector2.zero);
 
-    public void ChangeRoom(string direction)
-    {
-        int dx = 0, dy = 0;
-        Vector2 playerEndLoc = Vector2.zero;
-
-        switch (direction)
-        {
-            case "Up":
-                dx = 0;
-                dy = -1;
-                playerEndLoc = new Vector2(0, -9);
-                break;
-            case "Down":
-                dx = 0;
-                dy = 1;
-                playerEndLoc = new Vector2(0, 9);
-                break;
-            case "Left":
-                dx = -1;
-                dy = 0;
-                playerEndLoc = new Vector2(16.5f, 0);
-                break;
-            case "Right":
-                dx = 1;
-                dy = 0;
-                playerEndLoc = new Vector2(-16.5f, 0);
-                break;
-            default:
-                Debug.Log("Invalid direction");
-                break;
-        }
-
-        IntVector newLocation = new IntVector(playerLocation.x + dx, playerLocation.y + dy);
-        SetRoom(newLocation);
-
-        upArrow.SetActive(false);
-        downArrow.SetActive(false);
-        leftArrow.SetActive(false);
-        rightArrow.SetActive(false);
-
-        player.SetMoveTarget(playerEndLoc);
-
+        roomSelecting = false;
+        Pause(false);
         StartRoom();
     }
 
@@ -247,7 +218,7 @@ public partial class GameController : DanmakuGameController
         }
     }
 
-    IEnumerator EndWaveMessage()
+    private IEnumerator EndWaveMessage()
     {
         CanvasRenderer messageRender = waveMessage.GetComponent<CanvasRenderer>();
         waveMessage.SetActive(true);
@@ -263,12 +234,12 @@ public partial class GameController : DanmakuGameController
             messageRender.SetAlpha(a);
             yield return null;
         }
-
+        
         waveMessage.SetActive(false);
         StartWave();
     }
 
-    IEnumerator EndRoomMessage()
+    private IEnumerator EndRoomMessage()
     {
         CanvasRenderer messageRender = roomMessage.GetComponent<CanvasRenderer>();
         roomMessage.SetActive(true);
@@ -286,9 +257,10 @@ public partial class GameController : DanmakuGameController
         }
 
         roomMessage.SetActive(false);
+        
         EndRoom();
     }
-
+    
     public void Pause(bool value)
     {
         Paused = value;
@@ -299,5 +271,9 @@ public partial class GameController : DanmakuGameController
             foreach (Enemy enemy in currentWave.Enemies)
                 enemy.Paused = value;
         }
+
+        mapIndicator.SetActive(value);
+        if (value)
+            mapIndicator.GetComponent<MapIndicator>().ViewMap(opened, cleared, playerLocation, !roomSelecting);
     }
 }

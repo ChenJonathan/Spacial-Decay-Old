@@ -246,7 +246,6 @@
      <Compile Include="Assets\Scripts\Behavior\Movement\IdleMovementBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\MoveOverTimeBehavior.cs" />
      <Compile Include="Assets\Scripts\Core\EnemyManager.cs" />
-     <Compile Include="Assets\Scripts\Core\GUIController.cs" />
      <Compile Include="Assets\Scripts\Core\GameController.cs" />
      <Compile Include="Assets\Scripts\Core\Generate.cs" />
      <Compile Include="Assets\Scripts\Core\Interface\Behavior.cs" />
@@ -259,9 +258,11 @@
      <Compile Include="Assets\Scripts\GUI\DamageIndicator.cs" />
      <Compile Include="Assets\Scripts\GUI\HealthIndicator.cs" />
      <Compile Include="Assets\Scripts\GUI\LivesCounter.cs" />
+     <Compile Include="Assets\Scripts\GUI\MapIndicator.cs" />
      <Compile Include="Assets\Scripts\Util\BoundsUtil.cs" />
      <Compile Include="Assets\Scripts\Util\Direction.cs" />
      <Compile Include="Assets\Scripts\Util\IntVector.cs" />
+     <Compile Include="Assets\Scripts\Wave\SimulSpawnWave.cs" />
      <Compile Include="Assets\Scripts\Wave\TestWave.cs" />
      <None Include="Assets\ExternalLibraries\DanmakU\Core\Materials\OneColorBulletShader.shader" />
      <None Include="Assets\ExternalLibraries\DanmakU\Plugins\Editor\Vexe\LICENSE.txt" />

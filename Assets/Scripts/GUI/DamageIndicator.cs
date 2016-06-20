@@ -8,10 +8,7 @@ public class DamageIndicator : MonoBehaviour {
     [SerializeField]
     private float duration = 1;
     private float remaining;
-
-    [SerializeField]
-    public static GameObject DamageGUI;
-
+    
     private MeshRenderer damageRenderer;
 
     public bool Paused
