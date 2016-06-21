@@ -2,16 +2,17 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using DanmakU;
 
-public class MapIndicator : MonoBehaviour
+public class MapIndicator : Singleton<MapIndicator>
 {
-
     [SerializeField]
     private GameObject room;
     private GameObject[][] rooms;
 
     [SerializeField]
     private GameObject endpointPrefab;
+    private GameObject endMarker;
     [SerializeField]
     private GameObject playerLocPrefab;
     private GameObject playerMarker;
@@ -23,47 +24,62 @@ public class MapIndicator : MonoBehaviour
     private HashSet<IntVector> cleared = new HashSet<IntVector>();
 
     private IntVector playerLocation;
-
-    private bool viewOnly;
     
-    void Awake()
+    public enum State { Clickable, Invisible, ViewOnly }
+    private State currentState;
+    public State CurrentState
     {
+        get
+        {
+            return currentState;
+        }
+        set
+        {
+            currentState = value;
+            UpdateMap();
+        }
+    }
+    
+    public override void Awake()
+    {
+        base.Awake();
+
         float corridorSize = room.transform.FindChild("Right Door").GetComponent<RectTransform>().sizeDelta.x;
         roomSize = room.GetComponent<RectTransform>().sizeDelta.x + corridorSize;
         rt = GetComponent<RectTransform>();
     }
 
-    public void ViewMap(HashSet<IntVector> opened, HashSet<IntVector> cleared, IntVector playerLoc, bool viewOnly)
-    {
-        this.opened = opened;
-        this.cleared = cleared;
-        this.playerLocation = playerLoc;
-        this.viewOnly = viewOnly;
-        UpdateMap();
-    }
-
     private void UpdateMap()
     {
+        opened = ((GameController)GameController.Instance).OpenedRooms;
+        cleared = ((GameController)GameController.Instance).ClearedRooms;
+        playerLocation = ((GameController)GameController.Instance).Location;
+
+        Image mapRenderer = gameObject.GetComponent<Image>();
+        mapRenderer.enabled = !CurrentState.Equals(State.Invisible);
+        playerMarker.SetActive(!CurrentState.Equals(State.Invisible));
+        endMarker.SetActive(!CurrentState.Equals(State.Invisible));
+
         for (int i = 0; i < rooms.Length; i++)
         {
             for (int j = 0; j < rooms[i].Length; j++)
             {
                 if (rooms[i][j] != null)
                 {
-                    rooms[i][j].GetComponent<Button>().enabled = !viewOnly;
+                    rooms[i][j].GetComponent<Button>().enabled = (currentState == State.Clickable);
                     Image im = rooms[i][j].GetComponent<Image>();
                     
                     if (cleared.Contains(new IntVector(i, j)))
                     {
+                        rooms[i][j].SetActive(!CurrentState.Equals(State.Invisible));
                         for (int k = rooms[i][j].transform.childCount - 1; k >= 0; k--)
                             rooms[i][j].transform.GetChild(k).gameObject.SetActive(true);
                         rooms[i][j].GetComponent<Button>().enabled = false;
-                        rooms[i][j].SetActive(true);
                         im.color = Color.green;
                     }
                     else if (opened.Contains(new IntVector(i, j)))
                     {
-                        rooms[i][j].SetActive(true);
+                        rooms[i][j].SetActive(!CurrentState.Equals(State.Invisible));
                         ColorBlock cb = ColorBlock.defaultColorBlock;
                         cb.normalColor = im.color = Color.red;
                         cb.highlightedColor = Color.red / 2;
@@ -76,7 +92,8 @@ public class MapIndicator : MonoBehaviour
                 }
             }
         }
-        playerMarker.transform.localPosition = rooms[playerLocation.x][playerLocation.y].transform.localPosition;
+        if (playerMarker.activeSelf)
+            playerMarker.transform.localPosition = rooms[playerLocation.x][playerLocation.y].transform.localPosition;
     }
 
     public void Generate(GameController.Map map)
@@ -126,7 +143,7 @@ public class MapIndicator : MonoBehaviour
                 }
                 if (map.end.Equals(new IntVector(i, j)))
                 {
-                    GameObject endMarker = (GameObject)Instantiate(endpointPrefab);
+                    endMarker = (GameObject)Instantiate(endpointPrefab);
                     endMarker.transform.SetParent(transform);
                     endMarker.transform.localPosition = rooms[i][j].transform.localPosition;
                     endMarker.transform.localScale = new Vector3(1, 1, 1);
