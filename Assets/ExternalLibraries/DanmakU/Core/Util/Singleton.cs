@@ -36,7 +36,7 @@ namespace DanmakU {
 		public bool destroyNewInstances;
 
 		public virtual void Awake () {
-			if(keepBetweenScenes) {
+			if(keepBetweenScenes && transform.parent == null) {
 				DontDestroyOnLoad (gameObject);
 			}
 			if(instance != null) {

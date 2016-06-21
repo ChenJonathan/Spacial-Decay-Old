@@ -49,14 +49,31 @@ public partial class GameController : DanmakuGameController
     private Wave currentWave;
 
     private IntVector playerLocation;
+    public IntVector Location
+    {
+        get
+        {
+            return playerLocation;
+        }
+    }
     private int waveCount;
-
+    
     private HashSet<IntVector> cleared = new HashSet<IntVector>();
+    public HashSet<IntVector> ClearedRooms
+    {
+        get
+        {
+            return cleared;
+        }
+    }
     private HashSet<IntVector> opened = new HashSet<IntVector>();
-
-    private GameObject mapIndicator;
-
-    private bool roomSelecting;
+    public HashSet<IntVector> OpenedRooms
+    {
+        get
+        {
+            return opened;
+        }
+    }
 
     [SerializeField]
     private GameObject waveMessage;
@@ -95,7 +112,7 @@ public partial class GameController : DanmakuGameController
     public override void Awake()
     {
         base.Awake();
-
+        
         Vector2 spawnPos = Field.WorldPoint(Vector2.zero);
         player = (Player)Instantiate(playerPrefab, spawnPos, Quaternion.identity);
         if (player != null)
@@ -107,8 +124,6 @@ public partial class GameController : DanmakuGameController
 
     public void Start()
     {
-        mapIndicator = GameObject.FindGameObjectWithTag("Map");
-
         currentMap = Generate.RandomMap(3, 3, 1, 0.6f);
         StartMap();
     }
@@ -118,13 +133,14 @@ public partial class GameController : DanmakuGameController
         if (!Paused)
             base.Update();
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !roomSelecting)
+        if (Input.GetKeyDown(KeyCode.Escape) && MapIndicator.Instance.CurrentState != MapIndicator.State.Clickable)
             Pause(!Paused);
     }
 
     public void StartMap()
     {
-        mapIndicator.GetComponent<MapIndicator>().Generate(currentMap);
+        MapIndicator.Instance.Generate(currentMap);
+        MapIndicator.Instance.CurrentState = MapIndicator.State.Invisible;
 
         opened.Add(currentMap.start);
         SetRoom(currentMap.start);
@@ -171,8 +187,7 @@ public partial class GameController : DanmakuGameController
             {
                 opened.Add(new IntVector(playerLocation.x, playerLocation.y - 1));
             }
-            roomSelecting = true;
-            Pause(true);
+            MapIndicator.Instance.CurrentState = MapIndicator.State.Clickable;
         }
     }
 
@@ -192,7 +207,7 @@ public partial class GameController : DanmakuGameController
         }
         player.SetMoveTarget(Vector2.zero);
 
-        roomSelecting = false;
+        MapIndicator.Instance.CurrentState = MapIndicator.State.Invisible;
         Pause(false);
         StartRoom();
     }
@@ -271,9 +286,10 @@ public partial class GameController : DanmakuGameController
             foreach (Enemy enemy in currentWave.Enemies)
                 enemy.Paused = value;
         }
-
-        mapIndicator.SetActive(value);
-        if (value)
-            mapIndicator.GetComponent<MapIndicator>().ViewMap(opened, cleared, playerLocation, !roomSelecting);
+        
+        if (Paused)
+            MapIndicator.Instance.CurrentState = MapIndicator.State.ViewOnly;
+        else
+            MapIndicator.Instance.CurrentState = MapIndicator.State.Invisible;
     }
 }

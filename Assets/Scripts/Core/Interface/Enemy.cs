@@ -23,7 +23,7 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
     protected Player player;
     protected List<Enemy> enemies;
 
-    protected int difficulty = ((GameController)GameController.Instance).Difficulty;
+    protected int difficulty;
     
     protected int maxHealth;
     protected int health;
@@ -75,6 +75,8 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         healthBar = (GameObject)Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
         healthBar.transform.parent = transform;
         healthBar.transform.localScale = new Vector3(healthBarSize, 1, 1);
+
+        difficulty = ((GameController)GameController.Instance).Difficulty;
     }
 
     public void Update()

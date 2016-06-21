@@ -95,7 +95,7 @@ public class Player : DanmakuCollider, IPausable
         fireData = new FireBuilder(bulletPrefab, Field);
         fireData.From(transform);
         fireData.Towards(fireTarget);
-        fireData.WithSpeed(32, 48);
+        fireData.WithSpeed(24, 28);
         fireData.WithRotation(-4, 4);
         fireData.WithDamage(4, 8);
 
