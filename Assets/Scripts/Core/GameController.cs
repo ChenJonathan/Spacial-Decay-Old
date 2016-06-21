@@ -54,14 +54,6 @@ public partial class GameController : DanmakuGameController
     private GameObject waveMessage;
     [SerializeField]
     private GameObject roomMessage;
-    [SerializeField]
-    private GameObject upArrow;
-    [SerializeField]
-    private GameObject downArrow;
-    [SerializeField]
-    private GameObject leftArrow;
-    [SerializeField]
-    private GameObject rightArrow;
 
     public bool Paused
     {

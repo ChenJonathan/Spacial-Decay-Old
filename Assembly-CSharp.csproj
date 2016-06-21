@@ -242,6 +242,7 @@
      <Compile Include="Assets\Scripts\Behavior\Attack\CircularAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\CombinedAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\ConstantAttackBehavior.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Attack\SpreadAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\FollowPlayerConstantSpeedBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\IdleMovementBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\MoveOverTimeBehavior.cs" />
@@ -253,6 +254,7 @@
      <Compile Include="Assets\Scripts\Core\Interface\Wave.cs" />
      <Compile Include="Assets\Scripts\Core\Player.cs" />
      <Compile Include="Assets\Scripts\Core\WaveManager.cs" />
+     <Compile Include="Assets\Scripts\Enemy\SwarmEnemy.cs" />
      <Compile Include="Assets\Scripts\Enemy\TestBehaviorEnemy.cs" />
      <Compile Include="Assets\Scripts\Enemy\TestEnemy.cs" />
      <Compile Include="Assets\Scripts\GUI\DamageIndicator.cs" />
@@ -276,7 +278,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="FastSerializer">
- <HintPath>C:/Users/RaphaelChunho/Documents/Unity Project/Spacial-Decay/Assets/ExternalLibraries/DanmakU/Plugins/Vexe/Runtime/Serialization/Serializers/FastSerializer/FastSerializer.dll</HintPath>
+ <HintPath>F:/Spacial-Decay/Assets/ExternalLibraries/DanmakU/Plugins/Vexe/Runtime/Serialization/Serializers/FastSerializer/FastSerializer.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
