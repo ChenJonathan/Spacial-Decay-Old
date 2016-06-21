@@ -14,6 +14,8 @@ public class TestEnemy : Enemy
 
     void Start()
     {
+        health = maxHealth = 100 * difficulty;
+
         transform.rotation = Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position);
 
         fireData = new FireBuilder(bulletPrefab, Field);

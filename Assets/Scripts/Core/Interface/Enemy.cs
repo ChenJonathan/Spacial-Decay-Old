@@ -23,14 +23,13 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
     protected Player player;
     protected List<Enemy> enemies;
 
-    [SerializeField]
-    private int maxHealth;
-    private int health;
+    protected int difficulty = ((GameController)GameController.Instance).Difficulty;
+    
+    protected int maxHealth;
+    protected int health;
 
     private Bounds2D bounds;
-
     private GameObject healthBar;
-    [SerializeField]
     private float healthBarSize = 1.0f;
 
     [SerializeField]
@@ -68,7 +67,7 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         }
     }
 
-    public override void Awake()
+    public override sealed void Awake()
     {
         base.Awake();
         bounds = new Bounds2D(GetComponent<Collider2D>().bounds);
@@ -76,26 +75,31 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         healthBar = (GameObject)Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
         healthBar.transform.parent = transform;
         healthBar.transform.localScale = new Vector3(healthBarSize, 1, 1);
-
-        health = maxHealth;
     }
 
     public void Update()
     {
-        if(!Paused)
+        if (!Paused)
+        {
+            if (attackBehavior != null)
+                attackBehavior.Update();
+            if (movementBehavior != null)
+                movementBehavior.Update();
+
             NormalUpdate();
+        }
     }
 
     public virtual void NormalUpdate() { }
 
     public void FixedUpdate()
     {
-        if(!Paused)
+        if (!Paused)
         {
             if (attackBehavior != null)
-                attackBehavior.Update();
+                attackBehavior.FixedUpdate();
             if (movementBehavior != null)
-                movementBehavior.Update();
+                movementBehavior.FixedUpdate();
 
             NormalFixedUpdate();
         }

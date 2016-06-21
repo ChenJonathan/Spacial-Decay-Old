@@ -78,6 +78,8 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
             time += Time.deltaTime;
         }
 
+        public virtual void FixedUpdate() { }
+
         public void End()
         {
             if (OnBehaviorEnd != null)

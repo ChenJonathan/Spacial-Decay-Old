@@ -15,6 +15,8 @@ public class TestBehaviorEnemy : Enemy
 
     void Start()
     {
+        health = maxHealth = 100 * difficulty;
+
         transform.rotation = Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position);
 
         fireData = new FireBuilder(bulletPrefab, Field);
@@ -26,7 +28,7 @@ public class TestBehaviorEnemy : Enemy
         AddMovementBehavior(new FollowPlayerConstantSpeedBehavior(5, 5, 3));
         AddMovementBehavior(new IdleMovementBehavior(3));
         attacks.Add(new CircularAttackBehavior(fireData, 1, 16, 6));
-        attacks.Add(new ConstantAttackBehavior(fireData, 8, 6));
+        attacks.Add(new ConstantAttackBehavior(fireData, 4, 6));
         AddAttackBehavior(new CombinedAttackBehavior(attacks));
         loopBehaviors = true;
     }
