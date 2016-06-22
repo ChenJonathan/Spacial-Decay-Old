@@ -6,8 +6,11 @@ using System.Collections.Generic;
 public class TestBehaviorEnemy : Enemy
 {
     [SerializeField]
-    private DanmakuPrefab bulletPrefab;
-    private FireBuilder fireData;
+    private DanmakuPrefab straightBulletPrefab;
+    [SerializeField]
+    private DanmakuPrefab circleBulletPrefab;
+    private FireBuilder straightFireData;
+    private FireBuilder circleFireData;
 
     [SerializeField]
     private float fireRate = 1;
@@ -15,18 +18,25 @@ public class TestBehaviorEnemy : Enemy
 
     void Start()
     {
+        health = maxHealth = 100 * difficulty;
+        
         transform.rotation = Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position);
 
-        fireData = new FireBuilder(bulletPrefab, Field);
-        fireData.From(transform);
-        fireData.Towards(player);
-        fireData.WithSpeed(10);
+        straightFireData = new FireBuilder(straightBulletPrefab, Field);
+        straightFireData.From(transform);
+        straightFireData.Towards(player);
+        straightFireData.WithSpeed(100);
+
+        circleFireData = new FireBuilder(circleBulletPrefab, Field);
+        circleFireData.From(transform);
+        circleFireData.Towards(player);
+        circleFireData.WithSpeed(7);
 
         List<AttackBehavior> attacks = new List<AttackBehavior>();
         AddMovementBehavior(new OrbitPlayerConstantSpeedBehavior(5, 8, float.MaxValue));
         //AddMovementBehavior(new IdleMovementBehavior(3));
-        attacks.Add(new CircularAttackBehavior(fireData, 1, 16, 6));
-        attacks.Add(new ConstantAttackBehavior(fireData, 8, 6));
+        attacks.Add(new CircularAttackBehavior(circleFireData, 1, 16, 6));
+        attacks.Add(new ConstantAttackBehavior(straightFireData, 8, 6));
         AddAttackBehavior(new CombinedAttackBehavior(attacks));
         loopBehaviors = true;
     }

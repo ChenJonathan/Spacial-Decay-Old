@@ -23,3 +23,25 @@ C:\Users\RaphaelChunho\Documents\Unity Project\SpacialDecay\obj\Debug\Assembly-C
 C:\Users\RaphaelChunho\Documents\Unity Project\SpacialDecay\obj\Debug\Assembly-CSharp.pdb
 C:\Users\Jonathan Chen\Documents\Workspace\Unity\SpacialDecay\obj\Debug\Assembly-CSharp.dll
 C:\Users\Jonathan Chen\Documents\Workspace\Unity\SpacialDecay\obj\Debug\Assembly-CSharp.pdb
+F:\Spacial-Decay\Temp\bin\Debug\Assembly-CSharp.dll
+F:\Spacial-Decay\Temp\bin\Debug\Assembly-CSharp.pdb
+F:\Spacial-Decay\Temp\bin\Debug\FastSerializer.dll
+F:\Spacial-Decay\Temp\bin\Debug\UnityEditor.dll
+F:\Spacial-Decay\Temp\bin\Debug\UnityEngine.dll
+F:\Spacial-Decay\Temp\bin\Debug\UnityEngine.Networking.dll
+F:\Spacial-Decay\Temp\bin\Debug\UnityEngine.UI.dll
+F:\Spacial-Decay\Temp\bin\Debug\Mono.Cecil.dll
+F:\Spacial-Decay\Temp\bin\Debug\Unity.SerializationLogic.dll
+F:\Spacial-Decay\Temp\bin\Debug\Unity.DataContract.dll
+F:\Spacial-Decay\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+F:\Spacial-Decay\Temp\bin\Debug\Unity.UNetWeaver.dll
+F:\Spacial-Decay\Temp\bin\Debug\Unity.CecilTools.dll
+F:\Spacial-Decay\Temp\bin\Debug\Mono.Cecil.Pdb.dll
+F:\Spacial-Decay\Temp\bin\Debug\Mono.Cecil.Mdb.dll
+F:\Spacial-Decay\Temp\bin\Debug\UnityEngine.xml
+F:\Spacial-Decay\Temp\bin\Debug\UnityEditor.xml
+F:\Spacial-Decay\Temp\bin\Debug\UnityEngine.UI.xml
+F:\Spacial-Decay\Temp\bin\Debug\UnityEngine.Networking.xml
+F:\Spacial-Decay\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+F:\Spacial-Decay\obj\Debug\Assembly-CSharp.dll
+F:\Spacial-Decay\obj\Debug\Assembly-CSharp.pdb

@@ -36,6 +36,14 @@ public partial class GameController : DanmakuGameController
         }
     }
 
+    public int Difficulty
+    {
+        get
+        {
+            return currentMap.difficulty;
+        }
+    }
+
     private Map currentMap;
     private Room currentRoom;
     private Wave currentWave;
