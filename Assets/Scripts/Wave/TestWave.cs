@@ -21,7 +21,7 @@ public class TestWave : Wave
         {
             if(spawned < 5)
             {
-                SpawnEnemy("TestBehaviorEnemy", new Vector2(25, 15));
+                SpawnEnemy("TestBehaviorEnemy", new Vector2(0, 15));
                 time = 0;
                 spawned++;
             }
