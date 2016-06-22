@@ -23,8 +23,8 @@ public class TestBehaviorEnemy : Enemy
         fireData.WithSpeed(10);
 
         List<AttackBehavior> attacks = new List<AttackBehavior>();
-        AddMovementBehavior(new FollowPlayerConstantSpeedBehavior(5, 5, 3));
-        AddMovementBehavior(new IdleMovementBehavior(3));
+        AddMovementBehavior(new OrbitPlayerConstantSpeedBehavior(5, 8, float.MaxValue));
+        //AddMovementBehavior(new IdleMovementBehavior(3));
         attacks.Add(new CircularAttackBehavior(fireData, 1, 16, 6));
         attacks.Add(new ConstantAttackBehavior(fireData, 8, 6));
         AddAttackBehavior(new CombinedAttackBehavior(attacks));

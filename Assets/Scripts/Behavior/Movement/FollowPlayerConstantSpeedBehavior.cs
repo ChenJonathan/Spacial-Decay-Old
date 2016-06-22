@@ -19,8 +19,10 @@ public class FollowPlayerConstantSpeedBehavior : Enemy.MovementBehavior
     {
         base.Update();
 
-        distanceToMove = Mathf.Max(Vector2.Distance(player.transform.position, enemy.transform.position) - distanceFromPlayer, 0);
-        enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, player.transform.position, Mathf.Min(distanceToMove, speed * Time.deltaTime));
+        float distance = Vector2.Distance(player.transform.position, enemy.transform.position);
+
+        Vector2 destination = (enemy.transform.position - player.transform.position) / distance * distanceFromPlayer + player.transform.position;
+        enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, destination, speed * Time.deltaTime);
         if (time >= totalTime)
             End();
 	}
