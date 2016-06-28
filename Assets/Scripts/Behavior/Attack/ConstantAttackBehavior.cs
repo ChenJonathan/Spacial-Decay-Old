@@ -28,13 +28,12 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
     {
         base.Update();
 
-        fireDelay -= Time.deltaTime;
-
         if (fireDelay <= 0)
         {
-            fireDelay += 1 / fireRate;
+            fireDelay = 1 / fireRate;
             fireData.Fire();
         }
+        fireDelay -= Time.deltaTime;
 
         if (time >= duration)
             End();

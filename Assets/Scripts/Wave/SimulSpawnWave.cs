@@ -4,21 +4,11 @@ using System;
 
 public class SimulSpawnWave : Wave
 {
-    private int spawned;
     private int killed;
 
-    void Start()
+    public void Start()
     {
-        spawned = 0;
-    }
-
-    public override void NormalUpdate()
-    {
-        if (spawned < 5)
-        {
-            SpawnEnemy("TestBehaviorEnemy", new Vector2(25 - spawned * 5, 15));
-            spawned++;
-        }
+        SpawnEnemyChain("TestModifierEnemy", 0, new Vector2(25, 15), new Vector2(0, -7.5f), 5);
     }
 
     public override void OnEnemyDeath(Enemy enemy)

@@ -3,7 +3,7 @@ using System.Collections;
 using DanmakU;
 using System.Collections.Generic;
 
-public abstract partial class Enemy : DanmakuCollider, IPausable
+public partial class Enemy : DanmakuCollider, IPausable
 {
     private Wave wave;
     public Wave Wave

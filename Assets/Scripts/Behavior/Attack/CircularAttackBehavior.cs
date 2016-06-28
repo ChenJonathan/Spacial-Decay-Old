@@ -30,17 +30,16 @@ public class CircularAttackBehavior : Enemy.AttackBehavior
     {
         base.Update();
 
-        fireDelay -= Time.deltaTime;
-
         if (fireDelay <= 0)
         {
-            fireDelay += 1 / fireRate;
+            fireDelay = 1 / fireRate;
             for (float angle = 0; angle < 360; angle += angleOffset)
             {
                 fireData.WithRotation(angle);
                 fireData.Fire();
             }
         }
+        fireDelay -= Time.deltaTime;
 
         if (time >= duration)
             End();

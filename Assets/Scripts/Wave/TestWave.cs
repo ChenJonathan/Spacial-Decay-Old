@@ -4,28 +4,11 @@ using System;
 
 public class TestWave : Wave
 {
-    private float time;
-    private int spawned;
     private int killed;
 
-    void Start()
+    public void Start()
     {
-        time = 0;
-        spawned = 0;
-    }
-
-    public override void NormalUpdate()
-    {
-        time += Time.deltaTime;
-        if(time >= 4)
-        {
-            if(spawned < 5)
-            {
-                SpawnEnemy("TestBehaviorEnemy", new Vector2(25, 15));
-                time = 0;
-                spawned++;
-            }
-        }
+        SpawnEnemyChain("TestModifierEnemy", 4, new Vector2(25, 15), Vector2.zero, 5);
     }
 
     public override void OnEnemyDeath(Enemy enemy)

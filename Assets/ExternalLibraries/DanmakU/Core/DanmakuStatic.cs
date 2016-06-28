@@ -117,10 +117,10 @@ namespace DanmakU {
 			Danmaku[] all = danmakuPool.all;
 			for (int i = 0; i < all.Length; i++) {
 				danmaku = all[i];
-				if(danmaku != null && danmaku.is_active)
-					danmaku.Update();
-			}
-		}
+                if (danmaku != null && danmaku.is_active)
+                    danmaku.Update();
+            }
+        }
 
 		/// <summary>
 		/// Deactivates all currently active bullets.

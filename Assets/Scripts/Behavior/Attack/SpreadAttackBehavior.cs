@@ -34,17 +34,16 @@ public class SpreadAttackBehavior : Enemy.AttackBehavior
     {
         base.Update();
 
-        fireDelay -= Time.deltaTime;
-
         if (fireDelay <= 0)
         {
-            fireDelay += 1 / fireRate;
+            fireDelay = 1 / fireRate;
             for (float a = -spread / 2; a < spread / 2; a += angle)
             {
                 fireData.WithRotation(a);
                 fireData.Fire();
             }
         }
+        fireDelay -= Time.deltaTime;
 
         if (time >= duration)
             End();

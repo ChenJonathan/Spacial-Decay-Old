@@ -8,9 +8,9 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
     private AttackBehavior attackBehavior;
     private MovementBehavior movementBehavior;
 
-    protected bool loopBehaviors = false;
+    public bool LoopBehaviors = false;
 
-    protected void AddAttackBehavior(AttackBehavior behavior)
+    public void AddAttackBehavior(AttackBehavior behavior)
     {
         if (attackBehavior == null)
         {
@@ -23,7 +23,7 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         }
     }
 
-    protected void AddMovementBehavior(MovementBehavior behavior)
+    public void AddMovementBehavior(MovementBehavior behavior)
     {
         if (movementBehavior == null)
         {
@@ -36,22 +36,22 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         }
     }
 
-    protected void EndAttackBehavior()
+    public void EndAttackBehavior()
     {
         attackBehavior.End();
     }
 
-    protected void EndMovementBehavior()
+    public void EndMovementBehavior()
     {
         movementBehavior.End();
     }
 
-    protected void ClearAttackBehavior()
+    public void ClearAttackBehavior()
     {
         attackBehavior = null;
     }
     
-    protected void ClearMovementBehavior()
+    public void ClearMovementBehavior()
     {
         movementBehavior = null;
     }
@@ -123,7 +123,7 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
 
             enemy.attackBehavior = attackBehavior.next;
             attackBehavior.next = null;
-            if (enemy.loopBehaviors)
+            if (enemy.LoopBehaviors)
             {
                 enemy.AddAttackBehavior(attackBehavior);
                 if (enemy.attackBehavior != attackBehavior)
@@ -168,7 +168,7 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
 
             enemy.movementBehavior = movementBehavior.next;
             movementBehavior.next = null;
-            if (enemy.loopBehaviors)
+            if (enemy.LoopBehaviors)
             {
                 enemy.AddMovementBehavior(movementBehavior);
                 if (enemy.movementBehavior != movementBehavior)

@@ -8,12 +8,10 @@ public class SwarmEnemy : Enemy
     private DanmakuPrefab bulletPrefab;
     private FireBuilder fireData;
 
-    [SerializeField]
-    private float fireRate = 1;
-    private float fireDelay = 0;
-
     void Start()
     {
+        health = maxHealth = 100 * difficulty;
+
         transform.rotation = Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position);
 
         fireData = new FireBuilder(bulletPrefab, Field);
@@ -24,7 +22,7 @@ public class SwarmEnemy : Enemy
         AddAttackBehavior(new ConstantAttackBehavior(fireData, 2, 3));
         AddMovementBehavior(new FollowPlayerConstantSpeedBehavior(10, 4 * Random.value + 3, 3));
         AddMovementBehavior(new MoveOverTimeBehavior(this.transform.position + new Vector3(Random.value * 3, Random.value * 3), 3));
-        loopBehaviors = true;
+        LoopBehaviors = true;
     }
 
     public override void NormalUpdate()

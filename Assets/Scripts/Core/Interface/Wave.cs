@@ -9,19 +9,13 @@ public abstract class Wave : MonoBehaviour, IPausable
     protected Player player;
     public Player Player
     {
-        get
-        {
-            return player;
-        }
+        get { return player; }
     }
 
     protected List<Enemy> enemies;
     public List<Enemy> Enemies
     {
-        get
-        {
-            return enemies;
-        }
+        get { return enemies; }
     }
 
     public bool Paused
@@ -47,6 +41,7 @@ public abstract class Wave : MonoBehaviour, IPausable
 	public void End()
     {
         ClearEnemies();
+        Danmaku.DeactivateAllImmediate();
         ((GameController)GameController.Instance).EndWave();
 	}
 
@@ -78,10 +73,17 @@ public abstract class Wave : MonoBehaviour, IPausable
 
     private IEnumerator SpawnEnemyChain(List<Enemy> enemies, string enemy, float timeOffset, List<Vector2> locations)
     {
+        float timeDelay;
         foreach(Vector2 location in locations)
         {
+            timeDelay = 0;
             enemies.Add(SpawnEnemy(enemy, location));
-            yield return new WaitForSeconds(timeOffset);
+            while(timeDelay < timeOffset)
+            {
+                if (!Paused)
+                    timeDelay += Time.deltaTime;
+                yield return null;
+            }
         }
         yield break;
     }

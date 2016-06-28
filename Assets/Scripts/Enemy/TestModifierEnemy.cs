@@ -2,8 +2,9 @@
 using System.Collections;
 using DanmakU;
 using System.Collections.Generic;
+using DanmakU.Modifiers;
 
-public class TestBehaviorEnemy : Enemy
+public class TestModifierEnemy : Enemy
 {
     [SerializeField]
     private DanmakuPrefab straightBulletPrefab;
@@ -19,18 +20,17 @@ public class TestBehaviorEnemy : Enemy
         FireBuilder straightFireData = new FireBuilder(straightBulletPrefab, Field);
         straightFireData.From(transform);
         straightFireData.Towards(player);
-        straightFireData.WithSpeed(5);
+        straightFireData.WithSpeed(4);
+        straightFireData.WithRotation(-180, 180);
+        straightFireData.WithModifier(new CircularBurstModifier(8, 8, 0, 2));
 
         FireBuilder circleFireData = new FireBuilder(circleBulletPrefab, Field);
         circleFireData.From(transform);
         circleFireData.Towards(player);
-        circleFireData.WithSpeed(32);
-        circleFireData.WithRotation(-24, 24);
 
-        List<AttackBehavior> attacks = new List<AttackBehavior>();
+        AddAttackBehavior(new ConstantAttackBehavior(straightFireData, 4, 6));
         AddMovementBehavior(new FollowPlayerConstantSpeedBehavior(5, 5, 3));
         AddMovementBehavior(new IdleMovementBehavior(3));
-        AddAttackBehavior(new CircularAttackBehavior(circleFireData, 16, 64, 6));
         LoopBehaviors = true;
     }
     

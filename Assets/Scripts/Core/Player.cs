@@ -13,7 +13,7 @@ public class Player : DanmakuCollider, IPausable
     [SerializeField]
     private GameObject moveTargetPrefab;
 
-    private Collider2D collider;
+    private Collider2D collider2d;
     private FireBuilder fireData;
 
     private GameObject fireCrosshair;
@@ -25,10 +25,7 @@ public class Player : DanmakuCollider, IPausable
     private int lives = 5;
     public int Lives
     {
-        get
-        {
-            return lives;
-        }
+        get { return lives; }
     }
 
     private bool invincible = false;
@@ -62,12 +59,15 @@ public class Player : DanmakuCollider, IPausable
 
     protected override void DanmakuCollision(Danmaku danmaku, RaycastHit2D info)
     {
-        danmaku.Deactivate();
-        if(!invincible)
+        if(!isMoving())
         {
-            lives--;
-            livesCounter.UpdateCounter(lives);
-            StartCoroutine(setInvincible(INVINCIBILITY_ON_HIT));
+            danmaku.Deactivate();
+            if (!invincible)
+            {
+                lives--;
+                livesCounter.UpdateCounter(lives);
+                StartCoroutine(setInvincible(INVINCIBILITY_ON_HIT));
+            }
         }
     }
 
@@ -75,7 +75,7 @@ public class Player : DanmakuCollider, IPausable
     {
         base.Awake();
 
-        collider = GetComponent<Collider2D>();
+        collider2d = GetComponent<Collider2D>();
         fireTarget = new Vector2(transform.position.x, transform.position.y + 0.001f);
         moveTarget = new Vector2(transform.position.x, transform.position.y);
 
@@ -158,7 +158,7 @@ public class Player : DanmakuCollider, IPausable
     public void SetMoveTarget(Vector2 target)
     {
         moveCrosshair.transform.position = target;
-        moveTarget = BoundsUtil.VerifyBounds(target, new Bounds2D(collider.bounds), Field.MovementBounds);
+        moveTarget = BoundsUtil.VerifyBounds(target, new Bounds2D(collider2d.bounds), Field.MovementBounds);
     }
 
     public bool isMoving()
