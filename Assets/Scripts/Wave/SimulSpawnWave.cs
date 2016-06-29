@@ -16,7 +16,7 @@ public class SimulSpawnWave : Wave
     {
         if (spawned < 5)
         {
-            SpawnEnemy("TestBehaviorEnemy", new Vector2(25 - spawned * 5, 15));
+            SpawnEnemy("TestEnemy", new Vector2(25 - spawned * 5, 15));
             spawned++;
         }
     }
