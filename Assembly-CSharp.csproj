@@ -57,8 +57,10 @@
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\AccelerationController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\AutoDeactivateController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\ColorChangeController.cs" />
+     <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\CthuluController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\DelayedAngleChange.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\HomingController.cs" />
+     <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\RotateController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\SpeedCurveController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\SpeedLimitController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Danmaku.cs" />
@@ -283,7 +285,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="FastSerializer">
- <HintPath>F:/Spacial-Decay/Assets/ExternalLibraries/DanmakU/Plugins/Vexe/Runtime/Serialization/Serializers/FastSerializer/FastSerializer.dll</HintPath>
+ <HintPath>C:/Users/RaphaelChunho/Documents/Unity Project/Spacial-Decay/Assets/ExternalLibraries/DanmakU/Plugins/Vexe/Runtime/Serialization/Serializers/FastSerializer/FastSerializer.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

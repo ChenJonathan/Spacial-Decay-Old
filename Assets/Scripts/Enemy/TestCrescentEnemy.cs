@@ -24,7 +24,7 @@ public class TestCrescentEnemy : Enemy
         fireData = new FireBuilder(bulletPrefab, Field);
         fireData.From(transform);
         fireData.Towards(player);
-        fireData.WithSpeed(100);
+        fireData.WithSpeed(10);
 
         ColorChangeController colorController = new ColorChangeController();
         Gradient g = new Gradient();
@@ -35,24 +35,24 @@ public class TestCrescentEnemy : Enemy
         g.SetKeys(gck, gak);
         colorController.ColorGradient = g;
 
+        RotateController rotateController = new RotateController();
+        rotateController.RotateSpeed = 4;
+
         List<DanmakuController> controllers = new List<DanmakuController>();
         controllers.Add(colorController.Update);
-
+        controllers.Add(rotateController.Update);
+        
         fireData.WithControllers(controllers);
+
+        List<AttackBehavior> attacks = new List<AttackBehavior>();
+        AddMovementBehavior(new OrbitAroundPlayerBehavior(1, 4, 8, float.MaxValue));
+        attacks.Add(new CircularAttackBehavior(fireData, 2, 16, 6));
+        AddAttackBehavior(new CombinedAttackBehavior(attacks));
+        loopBehaviors = true;
     }
 
     public override void NormalUpdate()
     {
-        if (Vector2.Distance(transform.position, player.transform.position) > 10)
-            transform.position = Vector2.Lerp(transform.position, player.transform.position, 0.005f);
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position), Time.deltaTime * 4);
-
-        fireDelay -= Time.deltaTime;
-
-        if (fireDelay <= 0)
-        {
-            fireDelay += 1 / fireRate;
-            fireData.Fire();
-        }
     }
 }

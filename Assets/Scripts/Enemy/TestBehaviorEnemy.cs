@@ -36,7 +36,7 @@ public class TestBehaviorEnemy : Enemy
         AddMovementBehavior(new OrbitAroundPlayerBehavior(1, 4, 8, float.MaxValue));
         // AddMovementBehavior(new IdleMovementBehavior(3));
         attacks.Add(new CircularAttackBehavior(circleFireData, 2, 16, 6));
-        attacks.Add(new ConstantAttackBehavior(straightFireData, 8, 6));
+        //  attacks.Add(new ConstantAttackBehavior(straightFireData, 8, 6));
         AddAttackBehavior(new CombinedAttackBehavior(attacks));
         loopBehaviors = true;
     }
