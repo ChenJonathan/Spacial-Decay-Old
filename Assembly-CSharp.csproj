@@ -249,6 +249,7 @@
      <Compile Include="Assets\Scripts\Behavior\Movement\MoveOverTimeBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\OrbitAroundPlayerBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\OrbitAroundPointBehavior.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Movement\OrbitPlayerConstantSpeedBehavior.cs" />
      <Compile Include="Assets\Scripts\Core\EnemyManager.cs" />
      <Compile Include="Assets\Scripts\Core\GameController.cs" />
      <Compile Include="Assets\Scripts\Core\Generate.cs" />
