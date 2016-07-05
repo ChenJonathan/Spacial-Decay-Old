@@ -150,8 +150,13 @@ public partial class Enemy : DanmakuCollider, IPausable
                     enemy.attackBehavior.Start(enemy);
 
             }
-            else if (enemy.attackBehavior != null)
-                enemy.attackBehavior.Start(enemy);
+            else
+            {
+                if (enemy.attackBehavior != null)
+                    enemy.attackBehavior.Start(enemy);
+                else
+                    enemy.Die();
+            }
         }
     }
 
@@ -205,8 +210,13 @@ public partial class Enemy : DanmakuCollider, IPausable
                     enemy.movementBehavior.Start(enemy);
 
             }
-            else if (enemy.movementBehavior != null)
-                enemy.movementBehavior.Start(enemy);
+            else
+            {
+                if (enemy.movementBehavior != null)
+                    enemy.movementBehavior.Start(enemy);
+                else
+                    enemy.Die();
+            }
         }
     }
 }

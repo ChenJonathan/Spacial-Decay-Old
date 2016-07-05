@@ -6,7 +6,6 @@ public sealed class SpawnData
 {
     public Enemy Prefab;
     public int Health;
-    public Color color;
 
     private Enemy.AttackBehavior attackBehavior;
     public Enemy.AttackBehavior AttackBehavior
