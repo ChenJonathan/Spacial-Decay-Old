@@ -150,7 +150,6 @@ public class Player : DanmakuCollider, IPausable
 
     public bool isMoving()
     {
-        return false;
         return Vector2.Distance(transform.position, moveTarget) > 0.01;
     }
 

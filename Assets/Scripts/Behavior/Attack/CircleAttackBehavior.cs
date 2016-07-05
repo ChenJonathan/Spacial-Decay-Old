@@ -18,7 +18,7 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
     private float fireDelay;
     private Color color;
 
-    public CircleAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, DynamicFloat range, DynamicInt count, DynamicFloat deltaSpeed, DynamicFloat deltaAngularSpeed, float duration, Color color) : base(duration)
+    public CircleAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, DynamicFloat range, DynamicInt count, DynamicFloat deltaSpeed, DynamicFloat deltaAngularSpeed, Color color, float duration) : base(duration)
     {
         this.bullet = bullet;
         this.fireSpeed = fireSpeed;
@@ -30,7 +30,7 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
         this.color = color;
     }
 
-    public CircleAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, DynamicInt count, float duration, Color color) : this(bullet, fireSpeed, fireRate, (count - 1) * 360 / count, count, 0, 0, duration, color) {}
+    public CircleAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, DynamicInt count, Color color, float duration) : this(bullet, fireSpeed, fireRate, (count - 1) * 360 / count, count, 0, 0, color, duration) {}
 
     public override void Start(Enemy enemy)
     {

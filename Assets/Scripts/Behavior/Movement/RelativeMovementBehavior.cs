@@ -22,7 +22,7 @@ public class RelativeMovementBehavior : Enemy.MovementBehavior
     {
         base.Update();
 
-        Debug.Log(enemy.transform.position.ToString());
+        //Debug.Log(enemy.transform.position.ToString());
         enemy.transform.position = Vector2.Lerp(start, start + direction, time / duration);
     }
 }
