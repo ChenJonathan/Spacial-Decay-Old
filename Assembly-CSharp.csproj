@@ -241,6 +241,7 @@
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\RuntimeMember.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\SerializableType.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\Tuple.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Attack\CircularDiamondAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\CombinedAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\ConstantAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\IdleAttackBehavior.cs" />

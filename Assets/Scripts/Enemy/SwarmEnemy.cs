@@ -30,7 +30,7 @@ public class SwarmEnemy : Enemy
         LoopBehaviors = true;
     }
 
-    public override void NormalUpdate()
+    public override void Update()
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position), Time.deltaTime * 4);
     }
