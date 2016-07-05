@@ -7,8 +7,8 @@ using System;
 public class WaveManager : Singleton<WaveManager>
 {
     [SerializeField]
-    private List<string> waveList;
-    public List<string> Strings
+    private List<Wave> waveList;
+    public List<Wave> List
     {
         get
         {
@@ -16,36 +16,13 @@ public class WaveManager : Singleton<WaveManager>
         }
     }
 
-    private List<Type> typeList;
-    public List<Type> Types
+    public Wave Get(int wave)
     {
-        get
-        {
-            return typeList;
-        }
+        return waveList[wave];
     }
 
-    private Dictionary<string, Type> waveMap;
-
-    public override void Awake()
+    public Wave GetRandom()
     {
-        base.Awake();
-
-        typeList = new List<Type>();
-        waveMap = new Dictionary<string, Type>();
-        foreach (string wave in waveList)
-        {
-            Type waveType = Type.GetType(wave);
-            if(waveType != null)
-            {
-                typeList.Add(waveType);
-                waveMap.Add(wave, waveType);
-            }
-        }
-    }
-
-    public Type Get(string wave)
-    {
-        return waveMap[wave];
+        return waveList[UnityEngine.Random.Range(0, waveList.Count)];
     }
 }

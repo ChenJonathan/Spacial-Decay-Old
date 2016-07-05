@@ -57,26 +57,13 @@ public class Player : DanmakuCollider, IPausable
         set;
     }
 
-    protected override void DanmakuCollision(Danmaku danmaku, RaycastHit2D info)
-    {
-        if(!isMoving())
-        {
-            danmaku.Deactivate();
-            if (!invincible)
-            {
-                lives--;
-                livesCounter.UpdateCounter(lives);
-                StartCoroutine(setInvincible(INVINCIBILITY_ON_HIT));
-            }
-        }
-    }
-
     public override void Awake()
     {
         base.Awake();
+        TagFilter = "Enemy";
 
         collider2d = GetComponent<Collider2D>();
-        fireTarget = new Vector2(transform.position.x, transform.position.y + 0.001f);
+        fireTarget = new Vector2(transform.position.x, transform.position.y + 0.01f);
         moveTarget = new Vector2(transform.position.x, transform.position.y);
 
         fireCrosshair = (GameObject)Instantiate(fireTargetPrefab, fireTarget, Quaternion.identity);
@@ -131,8 +118,8 @@ public class Player : DanmakuCollider, IPausable
     {
         if(!Paused)
         {
-            transform.position = Vector2.Lerp(transform.position, moveTarget, Time.deltaTime * moveSpeed);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, (Vector3)fireTarget - transform.position), Time.deltaTime * rotateSpeed);
+            transform.position = Vector2.Lerp(transform.position, moveTarget, Time.fixedDeltaTime * moveSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, (Vector3)fireTarget - transform.position), Time.fixedDeltaTime * rotateSpeed);
         }
     }
 
@@ -187,5 +174,19 @@ public class Player : DanmakuCollider, IPausable
         renderer.material.color = color;
         invincible = false;
         yield break;
+    }
+
+    protected override void DanmakuCollision(Danmaku danmaku, RaycastHit2D info)
+    {
+        if (!isMoving())
+        {
+            danmaku.Deactivate();
+            if (!invincible)
+            {
+                lives--;
+                livesCounter.UpdateCounter(lives);
+                StartCoroutine(setInvincible(INVINCIBILITY_ON_HIT));
+            }
+        }
     }
 }

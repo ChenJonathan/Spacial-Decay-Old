@@ -20,6 +20,18 @@ namespace DanmakU {
 		/// </summary>
 		[SerializeField]
 		private string tagFilter;
+        protected string TagFilter
+        {
+            get
+            {
+                return tagFilter;
+            }
+            set
+            {
+                tagFilter = value;
+                validTags = new Regex(tagFilter);
+            }
+        }
 
 		private Regex validTags;
 
@@ -27,10 +39,10 @@ namespace DanmakU {
 		/// Called on Component instantiation
 		/// </summary>
 		public virtual void Awake() {
-			if (string.IsNullOrEmpty (tagFilter))
+			if (string.IsNullOrEmpty(tagFilter))
 				validTags = null;
 			else
-				validTags = new Regex (tagFilter);
+				validTags = new Regex(tagFilter);
 		}
 
 		#region IDanmakuCollider implementation
@@ -52,6 +64,6 @@ namespace DanmakU {
 		/// </summary>
 		/// <param name="danmaku">the danmaku that hit the collider.</param>
 		/// <param name="info"> additional information about the collision</param>
-		protected abstract void DanmakuCollision (Danmaku danmaku, RaycastHit2D info);
+		protected abstract void DanmakuCollision(Danmaku danmaku, RaycastHit2D info);
 	}
 }

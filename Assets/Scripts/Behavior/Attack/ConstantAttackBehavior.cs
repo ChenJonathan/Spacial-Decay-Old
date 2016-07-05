@@ -4,38 +4,40 @@ using DanmakU;
 
 public class ConstantAttackBehavior : Enemy.AttackBehavior
 {
+    private DanmakuPrefab bullet;
     private FireBuilder fireData;
 
-    private float fireRate;
+    private DynamicFloat fireSpeed;
+    private DynamicFloat fireRate;
     private float fireDelay;
-    private float duration;
 
-    public ConstantAttackBehavior(FireBuilder fireData, float fireRate, float duration)
+    public ConstantAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, float duration) : base(duration)
     {
-        this.fireData = fireData.Clone();
+        this.bullet = bullet;
+        this.fireSpeed = fireSpeed;
         this.fireRate = fireRate;
-        this.duration = duration;
     }
 
     public override void Start(Enemy enemy)
     {
         base.Start(enemy);
-
         fireDelay = 0;
+
+        this.fireData = new FireBuilder(bullet, enemy.Field);
+        fireData.From(enemy);
+        fireData.Towards(player);
+        fireData.WithSpeed(fireSpeed);
     }
 
     public override void Update()
     {
         base.Update();
-
+        
         if (fireDelay <= 0)
         {
             fireDelay = 1 / fireRate;
             fireData.Fire();
         }
         fireDelay -= Time.deltaTime;
-
-        if (time >= duration)
-            End();
     }
 }

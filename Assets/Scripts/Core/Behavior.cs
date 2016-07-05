@@ -2,8 +2,9 @@
 using System.Collections;
 using DanmakU;
 using System.Collections.Generic;
+using System;
 
-public abstract partial class Enemy : DanmakuCollider, IPausable
+public partial class Enemy : DanmakuCollider, IPausable
 {
     private AttackBehavior attackBehavior;
     private MovementBehavior movementBehavior;
@@ -55,15 +56,20 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
     {
         movementBehavior = null;
     }
-
-    // Cannot be reused
-    public abstract class Behavior
+    
+    public abstract class Behavior : ICloneable
     {
         protected Player player;
         protected Enemy enemy;
         protected List<Enemy> enemies;
 
         protected float time = 0;
+        protected readonly float duration;
+
+        public Behavior(float duration)
+        {
+            this.duration = duration;
+        }
 
         public virtual void Start(Enemy enemy)
         {
@@ -76,6 +82,8 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
         public virtual void Update()
         {
             time += Time.deltaTime;
+            if (time > duration)
+                End();
         }
 
         public virtual void FixedUpdate() { }
@@ -88,11 +96,15 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
 
         public delegate void BehaviorEvent(Behavior behavior);
         public BehaviorEvent OnBehaviorEnd;
+
+        public abstract object Clone();
     }
 
     public abstract class AttackBehavior : Behavior
     {
         private AttackBehavior next;
+
+        protected AttackBehavior(float duration) : base(duration) { }
 
         public override void Start(Enemy enemy)
         {
@@ -111,6 +123,14 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
             }
             if (temp != behavior)
                 temp.next = behavior;
+        }
+
+        public override object Clone()
+        {
+            object clone = MemberwiseClone();
+            if (next != null)
+                ((AttackBehavior)clone).next = (AttackBehavior)next.Clone();
+            return clone;
         }
 
         protected static void IncrementBehavior(Behavior behavior)
@@ -139,6 +159,8 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
     {
         private MovementBehavior next;
 
+        protected MovementBehavior(float duration) : base(duration) { }
+
         public override void Start(Enemy enemy)
         {
             base.Start(enemy);
@@ -156,6 +178,14 @@ public abstract partial class Enemy : DanmakuCollider, IPausable
             }
             if (temp != behavior)
                 temp.next = behavior;
+        }
+
+        public override object Clone()
+        {
+            object clone = MemberwiseClone();
+            if (next != null)
+                ((MovementBehavior)clone).next = (MovementBehavior)next.Clone();
+            return clone;
         }
 
         protected static void IncrementBehavior(Behavior behavior)

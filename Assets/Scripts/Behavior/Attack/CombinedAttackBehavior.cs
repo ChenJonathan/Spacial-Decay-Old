@@ -8,7 +8,7 @@ public class CombinedAttackBehavior : Enemy.AttackBehavior
     private List<Enemy.AttackBehavior> attackBehaviors;
     private Dictionary<Enemy.AttackBehavior, bool> attackActive;
     
-    public CombinedAttackBehavior(List<Enemy.AttackBehavior> attackBehaviors)
+    public CombinedAttackBehavior(List<Enemy.AttackBehavior> attackBehaviors, float duration) : base(duration)
     {
         this.attackBehaviors = attackBehaviors;
         attackActive = new Dictionary<Enemy.AttackBehavior, bool>();
@@ -33,17 +33,13 @@ public class CombinedAttackBehavior : Enemy.AttackBehavior
 
     public override void Update()
     {
-        bool finished = true;
         foreach (Enemy.AttackBehavior attackBehavior in attackBehaviors)
         {
             if (attackActive[attackBehavior])
             {
                 attackBehavior.Update();
-                finished = false;
             }
         }
-        if (finished)
-            End();
     }
 
     private void DeactivateBehavior(Enemy.Behavior behavior)

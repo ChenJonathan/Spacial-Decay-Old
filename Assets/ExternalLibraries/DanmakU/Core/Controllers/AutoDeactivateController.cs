@@ -52,7 +52,7 @@ namespace DanmakU.Controllers {
 		/// <param name="dt">the change in time since the last update</param>
 		public void Update (Danmaku danmaku, float dt) {
 			if (danmaku.frames > frames) {
-				danmaku.Deactivate();
+				danmaku.DeactivateImmediate();
 			}
 		}
 

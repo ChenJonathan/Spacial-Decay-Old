@@ -24,7 +24,7 @@ namespace DanmakU.Modifiers {
 			controllerAggregate = controller.Update;
 		}
 
-		public AddControllersModifier(IEnumerable<IDanmakuController>  controllers) {
+		public AddControllersModifier(IEnumerable<IDanmakuController> controllers) {
 			this.controllers = null;
 
 			if(controllers == null)

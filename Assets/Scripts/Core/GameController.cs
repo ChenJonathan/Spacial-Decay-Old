@@ -72,7 +72,7 @@ public partial class GameController : DanmakuGameController
     public struct Room
     {
         public bool active;
-        public List<string> waves;
+        public List<Wave> waves;
 
         // Doors
         public bool up;
@@ -186,7 +186,8 @@ public partial class GameController : DanmakuGameController
 
     public void StartWave()
     {
-        currentWave = (Wave)gameObject.AddComponent(WaveManager.Instance.Get(currentRoom.waves[waveCount]));
+        currentWave = (Wave)Instantiate(currentRoom.waves[waveCount], Vector2.zero, Quaternion.identity);
+        currentWave.transform.parent = transform;
     }
 
     public void EndWave()
