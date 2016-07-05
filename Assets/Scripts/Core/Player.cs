@@ -29,7 +29,7 @@ public class Player : DanmakuCollider, IPausable
     }
 
     private bool invincible = false;
-    private static readonly float INVINCIBILITY_ON_SPAWN = 5;
+    private static readonly float INVINCIBILITY_ON_SPAWN = 0;
     private static readonly float INVINCIBILITY_ON_HIT = 3;
 
     [SerializeField]
@@ -56,7 +56,7 @@ public class Player : DanmakuCollider, IPausable
         get;
         set;
     }
-
+    
     public override void Awake()
     {
         base.Awake();
@@ -82,8 +82,8 @@ public class Player : DanmakuCollider, IPausable
         fireData = new FireBuilder(bulletPrefab, Field);
         fireData.From(transform);
         fireData.Towards(fireTarget);
-        fireData.WithSpeed(24, 28);
-        fireData.WithRotation(-4, 4);
+        fireData.WithSpeed(12, 18);
+        fireData.WithRotation(-1, 1);
         fireData.WithDamage(4, 8);
 
         StartCoroutine(setInvincible(INVINCIBILITY_ON_SPAWN));
@@ -150,6 +150,7 @@ public class Player : DanmakuCollider, IPausable
 
     public bool isMoving()
     {
+        return false;
         return Vector2.Distance(transform.position, moveTarget) > 0.01;
     }
 

@@ -57,8 +57,10 @@
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\AccelerationController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\AutoDeactivateController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\ColorChangeController.cs" />
+     <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\CthuluController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\DelayedAngleChange.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\HomingController.cs" />
+     <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\RotateController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\SpeedCurveController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Controllers\SpeedLimitController.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Core\Danmaku.cs" />
