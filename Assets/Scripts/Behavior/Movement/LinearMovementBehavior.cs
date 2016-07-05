@@ -11,7 +11,7 @@ public class LinearMovementBehavior : Enemy.MovementBehavior
     {
         target = dest;
     }
-
+    
     public override void Start(Enemy enemy)
     {
         base.Start(enemy);

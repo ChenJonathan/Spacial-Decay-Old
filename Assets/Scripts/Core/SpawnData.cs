@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
-public sealed class SpawnData
+public sealed class SpawnData : ICloneable
 {
     public Enemy Prefab;
     public int Health;
@@ -63,5 +64,13 @@ public sealed class SpawnData
     {
         movementBehavior = null;
         return this;
+    }
+
+    public object Clone()
+    {
+        SpawnData clone = (SpawnData)this.MemberwiseClone();
+        clone.attackBehavior = (Enemy.AttackBehavior)attackBehavior.Clone();
+        clone.movementBehavior = (Enemy.MovementBehavior)movementBehavior.Clone();
+        return clone;
     }
 }
