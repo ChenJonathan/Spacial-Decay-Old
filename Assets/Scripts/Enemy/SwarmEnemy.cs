@@ -23,7 +23,7 @@ public class SwarmEnemy : Enemy
         fireData.WithController(new AutoDeactivateController(80));
 
         AddAttackBehavior(new IdleAttackBehavior(3));
-        AddAttackBehavior(new ConstantAttackBehavior(bulletPrefab, 8, 12, 1));
+        AddAttackBehavior(new ConstantAttackBehavior(bulletPrefab, 8, 12, Color.cyan, 1));
         AddAttackBehavior(new IdleAttackBehavior(2));
         AddMovementBehavior(new FollowPlayerBehavior(8, -2, 2, 3));
         AddMovementBehavior(new IdleMovementBehavior(3));

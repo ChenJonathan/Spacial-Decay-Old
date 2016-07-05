@@ -13,13 +13,16 @@ public class SimulSpawnWave : Wave
     private Enemy swarmPrefab;
     [SerializeField]
     private DanmakuPrefab bulletPrefab;
+    [SerializeField]
+    private DanmakuPrefab circlePrefab;
 
     public void Start()
     {
         SpawnData swarmEnemy = new SpawnData(swarmPrefab, 100 * difficulty)
             .AddAttackBehavior(new IdleAttackBehavior(3))
-            .AddAttackBehavior(new ConstantAttackBehavior(bulletPrefab, 8, 12, 1))
-            .AddAttackBehavior(new IdleAttackBehavior(2))
+            .AddAttackBehavior(new ConstantAttackBehavior(bulletPrefab, 8, 12, 1, Color.cyan))
+            .AddAttackBehavior(new IdleAttackBehavior(3))
+            .AddAttackBehavior(new CircleAttackBehavior(circlePrefab, 4, 1, 330, 12, 0, 0, 1, Color.red))
             .AddMovementBehavior(new FollowPlayerBehavior(8, -2, 2, 3))
             .AddMovementBehavior(new IdleMovementBehavior(3));
         swarmEnemy.FacePlayer = true;

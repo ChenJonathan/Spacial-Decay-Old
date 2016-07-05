@@ -40,9 +40,6 @@ public partial class Enemy : DanmakuCollider, IPausable
     [SerializeField]
     private GameObject healthBarPrefab;
 
-    [SerializeField]
-    private Color color;
-
     public DanmakuField Field
     {
         get;
