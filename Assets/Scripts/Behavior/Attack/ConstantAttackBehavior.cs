@@ -6,6 +6,7 @@ using DanmakU.Controllers;
 public class ConstantAttackBehavior : Enemy.AttackBehavior
 {
     private DanmakuPrefab bullet;
+    private Vector2? target;
     private FireBuilder fireData;
 
     private DynamicFloat fireSpeed;
@@ -13,13 +14,15 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
     private float fireDelay;
     private Color color;
 
-    public ConstantAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, float duration, Color color) : base(duration)
+    public ConstantAttackBehavior(DanmakuPrefab bullet, Vector2? target, DynamicFloat fireSpeed, DynamicFloat fireRate, Color color, float duration) : base(duration)
     {
         this.bullet = bullet;
         this.fireSpeed = fireSpeed;
         this.fireRate = fireRate;
         this.color = color;
     }
+
+    public ConstantAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, Color color, float duration) : this(bullet, null, fireSpeed, fireRate, color, duration) { }
 
     public override void Start(Enemy enemy)
     {
@@ -28,7 +31,10 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
 
         this.fireData = new FireBuilder(bullet, enemy.Field);
         fireData.From(enemy);
-        fireData.Towards(player);
+        if (target.HasValue)
+            fireData.Towards((Vector2)target);
+        else
+            fireData.Towards(player);
         fireData.WithSpeed(fireSpeed);
 
         ColorChangeController cc = new ColorChangeController();

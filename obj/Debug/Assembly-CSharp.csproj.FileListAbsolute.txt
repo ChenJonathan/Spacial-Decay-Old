@@ -44,4 +44,3 @@ F:\Spacial-Decay\Temp\bin\Debug\UnityEngine.UI.xml
 F:\Spacial-Decay\Temp\bin\Debug\UnityEngine.Networking.xml
 F:\Spacial-Decay\obj\Debug\Assembly-CSharp.dll
 F:\Spacial-Decay\obj\Debug\Assembly-CSharp.pdb
-F:\Spacial-Decay\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
