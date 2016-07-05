@@ -9,20 +9,15 @@ public abstract class Wave : MonoBehaviour, IPausable
     protected Player player;
     public Player Player
     {
-        get
-        {
-            return player;
-        }
+        get { return player; }
     }
-
     protected List<Enemy> enemies;
     public List<Enemy> Enemies
     {
-        get
-        {
-            return enemies;
-        }
+        get { return enemies; }
     }
+
+    protected int difficulty;
 
     public bool Paused
     {
@@ -30,10 +25,19 @@ public abstract class Wave : MonoBehaviour, IPausable
         set;
     }
 
+    public DanmakuField Field
+    {
+        get;
+        set;
+    }
+
     public void Awake()
     {
-        player = ((GameController)GameController.Instance).Player;
+        GameController game = ((GameController)GameController.Instance);
+        player = game.Player;
         enemies = new List<Enemy>();
+        difficulty = game.Difficulty;
+        Field = game.Field;
     }
 
     public void Update()
@@ -47,18 +51,28 @@ public abstract class Wave : MonoBehaviour, IPausable
 	public void End()
     {
         ClearEnemies();
+        Danmaku.DeactivateAllImmediate();
         ((GameController)GameController.Instance).EndWave();
 	}
 
-    public Enemy SpawnEnemy(string enemy, Vector2 location)
+    public Enemy SpawnEnemy(SpawnData enemy, Vector2 location)
     {
-        Enemy temp = EnemyManager.Instance.Spawn(enemy, location);
+        Enemy temp = (Enemy)Instantiate(enemy.Prefab, location, Quaternion.identity);
+        temp.transform.parent = Field.transform;
+        temp.Field = Field;
         temp.Wave = this;
         enemies.Add(temp);
+
+        temp.MaxHealth = temp.Health = enemy.Health;
+        temp.AddAttackBehavior((Enemy.AttackBehavior)enemy.AttackBehavior.Clone());
+        temp.AddMovementBehavior((Enemy.MovementBehavior)enemy.MovementBehavior.Clone());
+        temp.FacePlayer = enemy.FacePlayer;
+        temp.LoopBehaviors = enemy.LoopBehaviors;
+
         return temp;
     }
 
-    public List<Enemy> SpawnEnemyChain(string enemy, float timeOffset, Vector2 location, Vector2 locationOffset, int count)
+    public List<Enemy> SpawnEnemyChain(SpawnData enemy, float timeOffset, Vector2 location, Vector2 locationOffset, int count)
     {
         List<Vector2> locations = new List<Vector2>();
         for(int i = 0; i < count; i++)
@@ -69,19 +83,26 @@ public abstract class Wave : MonoBehaviour, IPausable
         return SpawnEnemyChain(enemy, timeOffset, locations);
     }
 
-    public List<Enemy> SpawnEnemyChain(string enemy, float timeOffset, List<Vector2> locations)
+    public List<Enemy> SpawnEnemyChain(SpawnData enemy, float timeOffset, List<Vector2> locations)
     {
         List<Enemy> enemies = new List<Enemy>();
         StartCoroutine(SpawnEnemyChain(enemies, enemy, timeOffset, locations));
         return enemies;
     }
 
-    private IEnumerator SpawnEnemyChain(List<Enemy> enemies, string enemy, float timeOffset, List<Vector2> locations)
+    private IEnumerator SpawnEnemyChain(List<Enemy> enemies, SpawnData enemy, float timeOffset, List<Vector2> locations)
     {
+        float timeDelay;
         foreach(Vector2 location in locations)
         {
+            timeDelay = 0;
             enemies.Add(SpawnEnemy(enemy, location));
-            yield return new WaitForSeconds(timeOffset);
+            while(timeDelay < timeOffset)
+            {
+                if (!Paused)
+                    timeDelay += Time.deltaTime;
+                yield return null;
+            }
         }
         yield break;
     }

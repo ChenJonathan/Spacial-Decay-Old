@@ -8,15 +8,13 @@ public class OrbitAroundPointBehavior : Enemy.MovementBehavior
     private float angularSpeed;
     private float radius;
     private Vector3 point;
-    private float totalTime;
 
-    public OrbitAroundPointBehavior(float radialSpeed, float angularSpeed, DynamicFloat radius, Vector3 point, float totalTime)
+    public OrbitAroundPointBehavior(float radialSpeed, float angularSpeed, DynamicFloat radius, Vector3 point, float duration) : base(duration)
     {
         this.radialSpeed = radialSpeed;
         this.angularSpeed = angularSpeed;
         this.radius = radius;
         this.point = point;
-        this.totalTime = totalTime;
     }
     
     public override void Update()
@@ -29,8 +27,5 @@ public class OrbitAroundPointBehavior : Enemy.MovementBehavior
         if (Mathf.Abs(distance - radius) > 0.01)
             enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, destination, radialSpeed * Time.deltaTime);
         enemy.transform.RotateAround(point, Vector3.back, radius * angularSpeed * Time.deltaTime);
-        
-        if (time >= totalTime)
-            End();
     }
 }

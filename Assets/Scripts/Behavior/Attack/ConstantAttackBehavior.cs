@@ -1,42 +1,56 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DanmakU;
+using DanmakU.Controllers;
 
 public class ConstantAttackBehavior : Enemy.AttackBehavior
 {
+    private DanmakuPrefab bullet;
     private FireBuilder fireData;
 
-    private float fireRate;
+    private DynamicFloat fireSpeed;
+    private DynamicFloat fireRate;
     private float fireDelay;
-    private float duration;
+    private Color color;
 
-    public ConstantAttackBehavior(FireBuilder fireData, float fireRate, float duration)
+    public ConstantAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, float duration, Color color) : base(duration)
     {
-        this.fireData = fireData.Clone();
+        this.bullet = bullet;
+        this.fireSpeed = fireSpeed;
         this.fireRate = fireRate;
-        this.duration = duration;
+        this.color = color;
     }
 
     public override void Start(Enemy enemy)
     {
         base.Start(enemy);
-
         fireDelay = 0;
+
+        this.fireData = new FireBuilder(bullet, enemy.Field);
+        fireData.From(enemy);
+        fireData.Towards(player);
+        fireData.WithSpeed(fireSpeed);
+
+        ColorChangeController cc = new ColorChangeController();
+        Gradient g = new Gradient();
+        GradientColorKey[] gck = new GradientColorKey[1];
+        GradientAlphaKey[] gak = new GradientAlphaKey[1];
+        gck[0].color = color;
+        gak[0].alpha = 1;
+        g.SetKeys(gck, gak);
+        cc.ColorGradient = g;
+        fireData.WithController(cc);
     }
 
     public override void Update()
     {
         base.Update();
-
-        fireDelay -= Time.deltaTime;
-
+        
         if (fireDelay <= 0)
         {
-            fireDelay += 1 / fireRate;
+            fireDelay = 1 / fireRate;
             fireData.Fire();
         }
-
-        if (time >= duration)
-            End();
+        fireDelay -= Time.deltaTime;
     }
 }

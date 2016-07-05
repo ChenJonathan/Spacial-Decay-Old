@@ -9,10 +9,7 @@ public partial class GameController : DanmakuGameController
     private DanmakuField field;
     public DanmakuField Field
     {
-        get
-        {
-            return field;
-        }
+        get { return field; }
     }
 
     [SerializeField]
@@ -20,28 +17,12 @@ public partial class GameController : DanmakuGameController
     private Player player;
     public Player Player
     {
-        get
-        {
-            return player;
-        }
-    }
-
-    [SerializeField]
-    private int level = 1;
-    public int Level
-    {
-        get
-        {
-            return level;
-        }
+        get { return player; }
     }
 
     public int Difficulty
     {
-        get
-        {
-            return currentMap.difficulty;
-        }
+        get { return currentMap.difficulty; }
     }
 
     private Map currentMap;
@@ -51,28 +32,19 @@ public partial class GameController : DanmakuGameController
     private IntVector playerLocation;
     public IntVector Location
     {
-        get
-        {
-            return playerLocation;
-        }
+        get { return playerLocation; }
     }
     private int waveCount;
     
     private HashSet<IntVector> cleared = new HashSet<IntVector>();
     public HashSet<IntVector> ClearedRooms
     {
-        get
-        {
-            return cleared;
-        }
+        get { return cleared; }
     }
     private HashSet<IntVector> opened = new HashSet<IntVector>();
     public HashSet<IntVector> OpenedRooms
     {
-        get
-        {
-            return opened;
-        }
+        get { return opened; }
     }
 
     [SerializeField]
@@ -100,7 +72,7 @@ public partial class GameController : DanmakuGameController
     public struct Room
     {
         public bool active;
-        public List<string> waves;
+        public List<Wave> waves;
 
         // Doors
         public bool up;
@@ -124,7 +96,7 @@ public partial class GameController : DanmakuGameController
 
     public void Start()
     {
-        currentMap = Generate.RandomMap(3, 3, 1, 0.6f);
+        currentMap = Generate.RandomMap(9, 9, 1, 0.6f);
         StartMap();
     }
 
@@ -214,7 +186,8 @@ public partial class GameController : DanmakuGameController
 
     public void StartWave()
     {
-        currentWave = (Wave)gameObject.AddComponent(WaveManager.Instance.Get(currentRoom.waves[waveCount]));
+        currentWave = (Wave)Instantiate(currentRoom.waves[waveCount], Vector2.zero, Quaternion.identity);
+        currentWave.transform.parent = transform;
     }
 
     public void EndWave()

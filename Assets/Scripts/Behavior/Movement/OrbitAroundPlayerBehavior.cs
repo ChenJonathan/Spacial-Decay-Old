@@ -7,17 +7,15 @@ public class OrbitAroundPlayerBehavior : Enemy.MovementBehavior
     private float radialSpeed;
     private float angularSpeed;
     private float radius;
-    private float totalTime;
 
     private Vector3 previousPlayerPosition;
     private Vector3 playerDisplacement;
 
-    public OrbitAroundPlayerBehavior(float radialSpeed, float angularSpeed, DynamicFloat radius, float totalTime)
+    public OrbitAroundPlayerBehavior(float radialSpeed, float angularSpeed, DynamicFloat radius, float duration) : base(duration)
     {
         this.radialSpeed = radialSpeed;
         this.angularSpeed = angularSpeed;
         this.radius = radius;
-        this.totalTime = totalTime;
     }
 
     public override void Start(Enemy enemy)
@@ -44,8 +42,5 @@ public class OrbitAroundPlayerBehavior : Enemy.MovementBehavior
         enemy.transform.position = newTarget;
         playerDisplacement += player.transform.position - previousPlayerPosition - enemyDisplacement;
         previousPlayerPosition = player.transform.position;
-
-        if (time >= totalTime)
-            End();
     }
 }

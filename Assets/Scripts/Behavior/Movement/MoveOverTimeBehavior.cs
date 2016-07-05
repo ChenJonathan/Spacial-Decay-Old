@@ -1,16 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MoveOverTimeBehavior : Enemy.MovementBehavior
+public class LinearMovementBehavior : Enemy.MovementBehavior
 {
     private Vector2 start;
-    private Vector2 target;
-    private float totalTime;
 
-    public MoveOverTimeBehavior(Vector2 dest, float interval)
+    private readonly Vector2 target;
+
+    public LinearMovementBehavior(Vector2 dest, float duration) : base(duration)
     {
         target = dest;
-        totalTime = interval;
     }
 
     public override void Start(Enemy enemy)
@@ -24,8 +23,6 @@ public class MoveOverTimeBehavior : Enemy.MovementBehavior
         base.Update();
 
         Debug.Log(enemy.transform.position.ToString());
-        enemy.transform.position = Vector2.Lerp(start, target, time / totalTime);
-        if (time >= totalTime)
-            End();
+        enemy.transform.position = Vector2.Lerp(start, target, time / duration);
 	}
 }

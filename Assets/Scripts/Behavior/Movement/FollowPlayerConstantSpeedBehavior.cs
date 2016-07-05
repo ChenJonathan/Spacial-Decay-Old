@@ -1,29 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FollowPlayerConstantSpeedBehavior : Enemy.MovementBehavior
+public class FollowPlayerBehavior : Enemy.MovementBehavior
 {
     private float speed;
+    private float deltaSpeed;
     private float distanceFromPlayer;
     private float distanceToMove;
-    private float totalTime;
 
-    public FollowPlayerConstantSpeedBehavior(float speed, float distanceFromPlayer, float totalTime)
+    private readonly float initialSpeed;
+
+    public FollowPlayerBehavior(float speed, float deltaSpeed, float distanceFromPlayer, float duration) : base(duration)
     {
-        this.speed = speed;
+        this.speed = initialSpeed = speed;
+        this.deltaSpeed = deltaSpeed;
         this.distanceFromPlayer = distanceFromPlayer;
-        this.totalTime = totalTime;
     }
 
-    public override void Update ()
+    public override void Start(Enemy enemy)
     {
-        base.Update();
+        base.Start(enemy);
+        
+        speed = initialSpeed;
+    }
+
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
 
         float distance = Vector2.Distance(player.transform.position, enemy.transform.position);
-
         Vector2 destination = (enemy.transform.position - player.transform.position) / distance * distanceFromPlayer + player.transform.position;
-        enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, destination, speed * Time.deltaTime);
-        if (time >= totalTime)
-            End();
+        if (enemy.transform.position != player.transform.position)
+            enemy.transform.position = Vector2.MoveTowards(enemy.transform.position, destination, speed * Time.fixedDeltaTime);
+        speed += deltaSpeed * Time.fixedDeltaTime;
 	}
 }
