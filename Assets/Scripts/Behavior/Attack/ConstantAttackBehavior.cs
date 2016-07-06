@@ -13,16 +13,13 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
 
     private DynamicFloat fireSpeed;
     private DynamicFloat fireRate;
-
-    private DynamicFloat rotateSpeed;
+    private float fireDelay;
 
     private Color color;
 
     private List<DanmakuModifier> modifiers;
     private List<IDanmakuController> controllers;
 
-    private float fireDelay;
-    
     public ConstantAttackBehavior(DanmakuPrefab bullet, bool trackPlayer, DynamicFloat fireSpeed, DynamicFloat fireRate, float duration) : this(bullet, Vector2.zero, fireSpeed, fireRate, duration)
     {
         targetPlayer = true;
@@ -36,7 +33,7 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
         this.target = target;
         this.fireSpeed = fireSpeed;
         this.fireRate = fireRate;
-        color = Color.white;
+        color = bullet.Color;
 
         modifiers = new List<DanmakuModifier>();
         controllers = new List<IDanmakuController>();

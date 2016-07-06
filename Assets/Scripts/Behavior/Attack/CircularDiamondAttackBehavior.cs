@@ -2,6 +2,7 @@
 using System.Collections;
 using DanmakU;
 using DanmakU.Modifiers;
+using System.Collections.Generic;
 
 public class CircularDiamondAttackBehavior : Enemy.AttackBehavior
 {
@@ -18,6 +19,11 @@ public class CircularDiamondAttackBehavior : Enemy.AttackBehavior
     private bool increasingSize;
     private float fireDelay;
 
+    private Color color;
+
+    private List<DanmakuModifier> modifiers;
+    private List<IDanmakuController> controllers;
+
     public CircularDiamondAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat angle, DynamicInt diamondSize, float duration) : this(bullet, Vector2.zero, fireSpeed, angle, diamondSize, duration)
     {
         targetPlayer = true;
@@ -31,6 +37,10 @@ public class CircularDiamondAttackBehavior : Enemy.AttackBehavior
         this.fireSpeed = fireSpeed;
         this.angle = angle;
         this.diamondSize = diamondSize;
+        color = bullet.Color;
+
+        modifiers = new List<DanmakuModifier>();
+        controllers = new List<IDanmakuController>();
     }
 
     public override void Start(Enemy enemy)
@@ -71,5 +81,24 @@ public class CircularDiamondAttackBehavior : Enemy.AttackBehavior
             }
         }
         fireDelay -= Time.deltaTime;
+    }
+
+
+    public CircularDiamondAttackBehavior SetColor(Color color)
+    {
+        this.color = color;
+        return this;
+    }
+
+    public CircularDiamondAttackBehavior AddModifier(DanmakuModifier modifier)
+    {
+        modifiers.Add(modifier);
+        return this;
+    }
+
+    public CircularDiamondAttackBehavior AddController(IDanmakuController controller)
+    {
+        controllers.Add(controller);
+        return this;
     }
 }

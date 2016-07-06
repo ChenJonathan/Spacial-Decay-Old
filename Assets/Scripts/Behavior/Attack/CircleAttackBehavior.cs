@@ -3,6 +3,7 @@ using System.Collections;
 using DanmakU;
 using DanmakU.Controllers;
 using DanmakU.Modifiers;
+using System.Collections.Generic;
 
 public class CircleAttackBehavior : Enemy.AttackBehavior
 {
@@ -16,9 +17,13 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
     private DynamicFloat deltaSpeed;
     private DynamicFloat deltaAngularSpeed;
     private float fireDelay;
+
     private Color color;
 
-    public CircleAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, DynamicFloat range, DynamicInt count, DynamicFloat deltaSpeed, DynamicFloat deltaAngularSpeed, Color color, float duration) : base(duration)
+    private List<DanmakuModifier> modifiers;
+    private List<IDanmakuController> controllers;
+
+    public CircleAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, DynamicFloat range, DynamicInt count, DynamicFloat deltaSpeed, DynamicFloat deltaAngularSpeed, float duration) : base(duration)
     {
         this.bullet = bullet;
         this.fireSpeed = fireSpeed;
@@ -27,10 +32,15 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
         this.count = count;
         this.deltaSpeed = deltaSpeed;
         this.deltaAngularSpeed = deltaAngularSpeed;
-        this.color = color;
+        color = bullet.Color;
+
+        modifiers = new List<DanmakuModifier>();
+        controllers = new List<IDanmakuController>();
     }
 
-    public CircleAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, DynamicInt count, Color color, float duration) : this(bullet, fireSpeed, fireRate, (count - 1) * 360 / count, count, 0, 0, color, duration) {}
+    public CircleAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, DynamicFloat range, DynamicInt count, float duration) : this(bullet, fireSpeed, fireRate, range, count, 0, 0, duration) { }
+
+    public CircleAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, DynamicInt count, float duration) : this(bullet, fireSpeed, fireRate, (count - 1) * 360 / count, count, 0, 0, duration) {}
 
     public override void Start(Enemy enemy)
     {
@@ -41,17 +51,7 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
         fireData.From(enemy);
         fireData.Towards(player);
         fireData.WithSpeed(fireSpeed);
-
-        ColorChangeController cc = new ColorChangeController();
-        Gradient g = new Gradient();
-        GradientColorKey[] gck = new GradientColorKey[1];
-        GradientAlphaKey[] gak = new GradientAlphaKey[1];
-        gck[0].color = color;
-        gak[0].alpha = 1;
-        g.SetKeys(gck, gak);
-        cc.ColorGradient = g;
-        fireData.WithController(cc);
-
+        
         CircularBurstModifier cbm = new CircularBurstModifier(range, count, deltaSpeed, deltaAngularSpeed);
         fireData.WithModifier(cbm);
     }
@@ -66,5 +66,23 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
             fireData.Fire();
         }
         fireDelay -= Time.deltaTime;
+    }
+
+    public CircleAttackBehavior SetColor(Color color)
+    {
+        this.color = color;
+        return this;
+    }
+
+    public CircleAttackBehavior AddModifier(DanmakuModifier modifier)
+    {
+        modifiers.Add(modifier);
+        return this;
+    }
+
+    public CircleAttackBehavior AddController(IDanmakuController controller)
+    {
+        controllers.Add(controller);
+        return this;
     }
 }
