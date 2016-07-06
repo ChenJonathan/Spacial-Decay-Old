@@ -33,7 +33,7 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
         this.target = target;
         this.fireSpeed = fireSpeed;
         this.fireRate = fireRate;
-        color = bullet.Color;
+        color = bullet.GetComponent<SpriteRenderer>().color;
 
         modifiers = new List<DanmakuModifier>();
         controllers = new List<IDanmakuController>();

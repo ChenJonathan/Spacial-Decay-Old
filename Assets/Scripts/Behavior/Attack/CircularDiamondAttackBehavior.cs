@@ -3,6 +3,7 @@ using System.Collections;
 using DanmakU;
 using DanmakU.Modifiers;
 using System.Collections.Generic;
+using DanmakU.Controllers;
 
 public class CircularDiamondAttackBehavior : Enemy.AttackBehavior
 {
@@ -37,7 +38,7 @@ public class CircularDiamondAttackBehavior : Enemy.AttackBehavior
         this.fireSpeed = fireSpeed;
         this.angle = angle;
         this.diamondSize = diamondSize;
-        color = bullet.Color;
+        color = bullet.GetComponent<SpriteRenderer>().color;
 
         modifiers = new List<DanmakuModifier>();
         controllers = new List<IDanmakuController>();
@@ -57,6 +58,19 @@ public class CircularDiamondAttackBehavior : Enemy.AttackBehavior
         fireData.WithSpeed(fireSpeed);
         modifier = new CircularBurstModifier(0, 1, 0, 0);
         fireData.WithModifier(modifier);
+
+        ColorChangeController cc = new ColorChangeController();
+        Gradient g = new Gradient();
+        GradientColorKey[] gck = new GradientColorKey[1];
+        GradientAlphaKey[] gak = new GradientAlphaKey[1];
+        gck[0].color = color;
+        gak[0].alpha = 1;
+        g.SetKeys(gck, gak);
+        cc.ColorGradient = g;
+
+        fireData.WithController(cc);
+        fireData.WithModifiers(modifiers);
+        fireData.WithController(controllers);
     }
 
     public override void Update()

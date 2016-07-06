@@ -32,7 +32,7 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
         this.count = count;
         this.deltaSpeed = deltaSpeed;
         this.deltaAngularSpeed = deltaAngularSpeed;
-        color = bullet.Color;
+        color = bullet.GetComponent<SpriteRenderer>().color;
 
         modifiers = new List<DanmakuModifier>();
         controllers = new List<IDanmakuController>();
@@ -54,6 +54,19 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
         
         CircularBurstModifier cbm = new CircularBurstModifier(range, count, deltaSpeed, deltaAngularSpeed);
         fireData.WithModifier(cbm);
+
+        ColorChangeController cc = new ColorChangeController();
+        Gradient g = new Gradient();
+        GradientColorKey[] gck = new GradientColorKey[1];
+        GradientAlphaKey[] gak = new GradientAlphaKey[1];
+        gck[0].color = color;
+        gak[0].alpha = 1;
+        g.SetKeys(gck, gak);
+        cc.ColorGradient = g;
+
+        fireData.WithController(cc);
+        fireData.WithModifiers(modifiers);
+        fireData.WithController(controllers);
     }
 
     public override void Update()
