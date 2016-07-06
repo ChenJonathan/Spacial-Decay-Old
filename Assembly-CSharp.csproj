@@ -241,15 +241,17 @@
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\RuntimeMember.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\SerializableType.cs" />
      <Compile Include="Assets\ExternalLibraries\DanmakU\Plugins\Vexe\Runtime\Types\Others\Tuple.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Attack\CircleAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\CircularDiamondAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\CombinedAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\ConstantAttackBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Attack\IdleAttackBehavior.cs" />
-     <Compile Include="Assets\Scripts\Behavior\Movement\FollowPlayerConstantSpeedBehavior.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Movement\FollowPlayerBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\IdleMovementBehavior.cs" />
-     <Compile Include="Assets\Scripts\Behavior\Movement\MoveOverTimeBehavior.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Movement\LinearMovementBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\OrbitAroundPlayerBehavior.cs" />
      <Compile Include="Assets\Scripts\Behavior\Movement\OrbitAroundPointBehavior.cs" />
+     <Compile Include="Assets\Scripts\Behavior\Movement\RelativeMovementBehavior.cs" />
      <Compile Include="Assets\Scripts\Core\Behavior.cs" />
      <Compile Include="Assets\Scripts\Core\Enemy.cs" />
      <Compile Include="Assets\Scripts\Core\GameController.cs" />
@@ -266,6 +268,7 @@
      <Compile Include="Assets\Scripts\Util\BoundsUtil.cs" />
      <Compile Include="Assets\Scripts\Util\Direction.cs" />
      <Compile Include="Assets\Scripts\Util\IntVector.cs" />
+     <Compile Include="Assets\Scripts\Wave\ShurikenWave.cs" />
      <Compile Include="Assets\Scripts\Wave\SimulSpawnWave.cs" />
      <Compile Include="Assets\Scripts\Wave\TestWave.cs" />
      <None Include="Assets\ExternalLibraries\DanmakU\Core\Materials\OneColorBulletShader.shader" />

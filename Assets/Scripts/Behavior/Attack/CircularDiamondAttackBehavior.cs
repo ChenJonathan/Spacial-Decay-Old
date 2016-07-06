@@ -8,7 +8,8 @@ public class CircularDiamondAttackBehavior : Enemy.AttackBehavior
     private DanmakuPrefab bullet;
     private FireBuilder fireData;
 
-    private Vector2? target;
+    private bool targetPlayer;
+    private Vector2 target;
     private DynamicFloat fireSpeed;
     private DynamicFloat angle;
     private DynamicInt diamondSize;
@@ -17,11 +18,15 @@ public class CircularDiamondAttackBehavior : Enemy.AttackBehavior
     private bool increasingSize;
     private float fireDelay;
 
-    public CircularDiamondAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat angle, DynamicInt diamondSize, float duration) : this(bullet, null, fireSpeed, angle, diamondSize, duration) { }
+    public CircularDiamondAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat angle, DynamicInt diamondSize, float duration) : this(bullet, Vector2.zero, fireSpeed, angle, diamondSize, duration)
+    {
+        targetPlayer = true;
+    }
 
-    public CircularDiamondAttackBehavior(DanmakuPrefab bullet, Vector2? target, DynamicFloat fireSpeed, DynamicFloat angle, DynamicInt diamondSize, float duration) : base(duration)
+    public CircularDiamondAttackBehavior(DanmakuPrefab bullet, Vector2 target, DynamicFloat fireSpeed, DynamicFloat angle, DynamicInt diamondSize, float duration) : base(duration)
     {
         this.bullet = bullet;
+        targetPlayer = false;
         this.target = target;
         this.fireSpeed = fireSpeed;
         this.angle = angle;
@@ -36,10 +41,9 @@ public class CircularDiamondAttackBehavior : Enemy.AttackBehavior
 
         this.fireData = new FireBuilder(bullet, enemy.Field);
         fireData.From(enemy);
-        if (target.HasValue)
-            fireData.Towards((Vector2)target);
-        else
-            fireData.Towards(player.transform.position);
+        if (targetPlayer)
+            target = player.transform.position;
+        fireData.Towards(target);
         fireData.WithSpeed(fireSpeed);
         modifier = new CircularBurstModifier(0, 1, 0, 0);
         fireData.WithModifier(modifier);

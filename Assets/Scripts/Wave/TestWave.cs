@@ -13,6 +13,8 @@ public class TestWave : Wave
     private Enemy swarmPrefab;
     [SerializeField]
     private DanmakuPrefab bulletPrefab;
+    [SerializeField]
+    private DanmakuPrefab circlePrefab;
 
     public void Start()
     {
