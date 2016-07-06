@@ -23,14 +23,13 @@ public class SwarmEnemy : Enemy
         fireData.WithController(new AutoDeactivateController(80));
 
         AddAttackBehavior(new IdleAttackBehavior(3));
-        AddAttackBehavior(new ConstantAttackBehavior(bulletPrefab, 8, 12, 1).SetColor(Color.cyan));
-        AddAttackBehavior(new IdleAttackBehavior(2));
+        AddAttackBehavior(new ConstantAttackBehavior(bulletPrefab, true, 8, 12, 1).SetColor(Color.cyan));
         AddMovementBehavior(new FollowPlayerBehavior(8, -2, 2, 3));
         AddMovementBehavior(new IdleMovementBehavior(3));
         LoopBehaviors = true;
     }
 
-    public override void NormalUpdate()
+    public override void Update()
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position), Time.deltaTime * 4);
     }

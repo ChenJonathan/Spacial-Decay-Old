@@ -7,7 +7,8 @@ using System.Collections.Generic;
 public class ConstantAttackBehavior : Enemy.AttackBehavior
 {
     private DanmakuPrefab bullet;
-    private Vector2? target;
+    private bool targetPlayer, trackPlayer;
+    private Vector2 target;
     private FireBuilder fireData;
 
     private DynamicFloat fireSpeed;
@@ -16,13 +17,21 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
     private DynamicFloat rotateSpeed;
 
     private Color color;
+
     private List<DanmakuModifier> modifiers;
     private List<IDanmakuController> controllers;
 
     private float fireDelay;
-
-    public ConstantAttackBehavior(DanmakuPrefab bullet, Vector2? target, DynamicFloat fireSpeed, DynamicFloat fireRate, float duration) : base(duration)
+    
+    public ConstantAttackBehavior(DanmakuPrefab bullet, bool trackPlayer, DynamicFloat fireSpeed, DynamicFloat fireRate, float duration) : this(bullet, Vector2.zero, fireSpeed, fireRate, duration)
     {
+        targetPlayer = true;
+        this.trackPlayer = trackPlayer;
+    }
+
+    public ConstantAttackBehavior(DanmakuPrefab bullet, Vector2 target, DynamicFloat fireSpeed, DynamicFloat fireRate, float duration) : base(duration)
+    {
+        targetPlayer = trackPlayer = false;
         this.bullet = bullet;
         this.target = target;
         this.fireSpeed = fireSpeed;
@@ -31,10 +40,8 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
 
         modifiers = new List<DanmakuModifier>();
         controllers = new List<IDanmakuController>();
-}
+    }
     
-    public ConstantAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, float duration) : this(bullet, null, fireSpeed, fireRate, duration) { }
-
     public override void Start(Enemy enemy)
     {
         base.Start(enemy);
@@ -42,10 +49,14 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
 
         fireData = new FireBuilder(bullet, enemy.Field);
         fireData.From(enemy);
-        if (target.HasValue)
-            fireData.Towards((Vector2)target);
-        else
+        if (trackPlayer)
             fireData.Towards(player);
+        else
+        {
+            if (targetPlayer)
+                target = player.transform.position;
+            fireData.Towards(target);
+        }
         fireData.WithSpeed(fireSpeed);
 
         ColorChangeController cc = new ColorChangeController();

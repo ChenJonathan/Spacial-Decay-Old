@@ -18,7 +18,7 @@ public class ShurikenWave : Wave
     {
         SpawnData ninjaEnemy1 = new SpawnData(ninjaPrefab, 100 * difficulty)
             .AddAttackBehavior(new IdleAttackBehavior(1))
-            .AddAttackBehavior(new ConstantAttackBehavior(shurikenPrefab, 12, 8, 1).SetColor(Color.red).AddController(new RotateController(2)))
+            .AddAttackBehavior(new ConstantAttackBehavior(shurikenPrefab, true, 12, 8, 1).SetColor(Color.red).AddController(new RotateController(2)))
             .AddAttackBehavior(new IdleAttackBehavior(1))
             .AddMovementBehavior(new RelativeMovementBehavior(new Vector2(35, 0), 1))
             .AddMovementBehavior(new IdleMovementBehavior(1))

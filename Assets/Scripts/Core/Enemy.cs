@@ -63,7 +63,7 @@ public partial class Enemy : DanmakuCollider, IPausable
         healthBar.transform.localScale = new Vector3(healthBarSize, 1, 1);
     }
 
-    public void Update()
+    public virtual void Update()
     {
         if (!Paused)
         {
@@ -71,14 +71,10 @@ public partial class Enemy : DanmakuCollider, IPausable
                 attackBehavior.Update();
             if (movementBehavior != null)
                 movementBehavior.Update();
-
-            NormalUpdate();
         }
     }
 
-    public virtual void NormalUpdate() { }
-
-    public void FixedUpdate()
+    public virtual void FixedUpdate()
     {
         if (!Paused)
         {
@@ -89,12 +85,8 @@ public partial class Enemy : DanmakuCollider, IPausable
 
             if (FacePlayer)
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward, player.transform.position - transform.position), Time.deltaTime * 4);
-
-            NormalFixedUpdate();
         }
     }
-
-    public virtual void NormalFixedUpdate() { }
 
     public virtual void Die()
     {

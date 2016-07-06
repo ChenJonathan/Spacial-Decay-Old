@@ -121,7 +121,6 @@ public partial class GameController : DanmakuGameController
     public void EndMap()
     {
         // TODO
-        Debug.Log("Map finished");
     }
 
     public void StartRoom()
@@ -132,9 +131,6 @@ public partial class GameController : DanmakuGameController
 
     public void EndRoom()
     {
-        // TODO
-        Debug.Log("Room finished");
-        
         if (playerLocation.Equals(currentMap.end))
         {
             EndMap();
@@ -192,8 +188,6 @@ public partial class GameController : DanmakuGameController
 
     public void EndWave()
     {
-        Debug.Log("Wave finished");
-
         Destroy(currentWave);
         waveCount++;
         if (waveCount == currentRoom.waves.Count)
