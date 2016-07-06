@@ -15,33 +15,39 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
 
     private DynamicFloat rotateSpeed;
 
-    private float fireDelay;
     private Color color;
-    
-    public ConstantAttackBehavior(DanmakuPrefab bullet, Vector2? target, DynamicFloat fireSpeed, DynamicFloat fireRate, Color color, float duration) : base(duration)
+    private List<DanmakuModifier> modifiers;
+    private List<IDanmakuController> controllers;
+
+    private float fireDelay;
+
+    public ConstantAttackBehavior(DanmakuPrefab bullet, Vector2? target, DynamicFloat fireSpeed, DynamicFloat fireRate, float duration) : base(duration)
     {
         this.bullet = bullet;
         this.target = target;
         this.fireSpeed = fireSpeed;
         this.fireRate = fireRate;
-        this.color = color;
-    }
+        color = Color.white;
+
+        modifiers = new List<DanmakuModifier>();
+        controllers = new List<IDanmakuController>();
+}
     
-    public ConstantAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, Color color, float duration) : this(bullet, null, fireSpeed, fireRate, color, duration) { }
+    public ConstantAttackBehavior(DanmakuPrefab bullet, DynamicFloat fireSpeed, DynamicFloat fireRate, float duration) : this(bullet, null, fireSpeed, fireRate, duration) { }
 
     public override void Start(Enemy enemy)
     {
         base.Start(enemy);
         fireDelay = 0;
 
-        this.fireData = new FireBuilder(bullet, enemy.Field);
+        fireData = new FireBuilder(bullet, enemy.Field);
         fireData.From(enemy);
         if (target.HasValue)
             fireData.Towards((Vector2)target);
         else
             fireData.Towards(player);
         fireData.WithSpeed(fireSpeed);
-        
+
         ColorChangeController cc = new ColorChangeController();
         Gradient g = new Gradient();
         GradientColorKey[] gck = new GradientColorKey[1];
@@ -50,8 +56,10 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
         gak[0].alpha = 1;
         g.SetKeys(gck, gak);
         cc.ColorGradient = g;
-        
+
         fireData.WithController(cc);
+        fireData.WithModifiers(modifiers);
+        fireData.WithController(controllers);
     }
 
     public override void Update()
@@ -64,5 +72,23 @@ public class ConstantAttackBehavior : Enemy.AttackBehavior
             fireData.Fire();
         }
         fireDelay -= Time.deltaTime;
+    }
+
+    public ConstantAttackBehavior SetColor(Color color)
+    {
+        this.color = color;
+        return this;
+    }
+
+    public ConstantAttackBehavior AddModifier(DanmakuModifier modifier)
+    {
+        modifiers.Add(modifier);
+        return this;
+    }
+
+    public ConstantAttackBehavior AddController(IDanmakuController controller)
+    {
+        controllers.Add(controller);
+        return this;
     }
 }

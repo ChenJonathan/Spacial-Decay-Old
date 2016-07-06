@@ -20,7 +20,7 @@ public class TestWave : Wave
     {
         SpawnData swarmEnemy = new SpawnData(swarmPrefab, 100 * difficulty)
             .AddAttackBehavior(new IdleAttackBehavior(3))
-            .AddAttackBehavior(new ConstantAttackBehavior(bulletPrefab, 8, 12, Color.cyan, 1))
+            .AddAttackBehavior(new ConstantAttackBehavior(bulletPrefab, 8, 12, 1).SetColor(Color.cyan))
             .AddAttackBehavior(new IdleAttackBehavior(3))
             .AddAttackBehavior(new CircleAttackBehavior(circlePrefab, 4, 1, 330, 12, 0, 0, Color.red, 1))
             .AddMovementBehavior(new FollowPlayerBehavior(8, -2, 2, 3))
