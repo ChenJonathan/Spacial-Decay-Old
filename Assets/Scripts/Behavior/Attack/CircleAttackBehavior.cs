@@ -16,6 +16,8 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
     private DynamicInt count;
     private DynamicFloat deltaSpeed;
     private DynamicFloat deltaAngularSpeed;
+    private DynamicFloat angleOffset;
+    private Vector2 target;
     private float fireDelay;
 
     private Color color;
@@ -32,6 +34,8 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
         this.count = count;
         this.deltaSpeed = deltaSpeed;
         this.deltaAngularSpeed = deltaAngularSpeed;
+        angleOffset = 0f;
+        target = Vector2.zero;
         color = bullet.GetComponent<SpriteRenderer>().color;
 
         modifiers = new List<DanmakuModifier>();
@@ -75,10 +79,23 @@ public class CircleAttackBehavior : Enemy.AttackBehavior
 
         if (fireDelay <= 0)
         {
+            if (angleOffset != 0)
+            {
+                Vector2 vectorDifference = target - (Vector2)enemy.transform.position;
+                target.x = enemy.transform.position.x + vectorDifference.x * Mathf.Cos(angleOffset * 180 / Mathf.PI) - vectorDifference.y * Mathf.Sin(angleOffset * 180 / Mathf.PI);
+                target.y = enemy.transform.position.y + vectorDifference.y * Mathf.Cos(angleOffset * 180 / Mathf.PI) + vectorDifference.x * Mathf.Sin(angleOffset * 180 / Mathf.PI);
+                fireData.Towards(target);
+            }
             fireDelay = 1 / fireRate;
             fireData.Fire();
         }
         fireDelay -= Time.deltaTime;
+    }
+
+    public CircleAttackBehavior AddAngleOffset(float offset)
+    {
+        angleOffset = offset;
+        return this;
     }
 
     public CircleAttackBehavior SetColor(Color color)
